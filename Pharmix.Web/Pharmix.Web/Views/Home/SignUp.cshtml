@@ -1,0 +1,129 @@
+﻿@model Pharmix.Web.Entities.ViewModels.BusinessViewModel
+
+@{
+    string message = ViewBag.Message ?? string.Empty;
+    ViewData["Title"] = "Sign Up For Subscription";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="dez-bnr-inr overlay-black-middle" style="background-image:url(/NewContent/images/main-slider/slide01.jpg);">
+    <div class="container">
+        <div class="dez-bnr-inr-entry">
+            <h1 class="text-white">Sign Up For Subscription</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="login-form">
+        <div class="tab-content">
+            <div id="login" class="tab-pane active text-center m-t100 m-b100">
+                <form id="BusinessNewUser" autocomplete="off" class="p-a30 dez-form m-t100" method="post" role="form">
+
+                    <h3 class="form-title m-t0">Sign Up</h3>
+                    <div class="dez-separator-outer m-b5">
+                        <div class="dez-separator bg-primary style-liner"></div>
+                    </div>
+
+                    <p>Enter your account details below: </p>
+
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" value="0" />
+                    <input type="hidden" asp-for="IdentityUserId" value="" />
+                    <input type="hidden" asp-for="PackageID" value="@ViewBag.PackageID" />
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="BusinessName" class="form-control" placeholder="Business Name" type="text" required />
+                                <span asp-validation-for="BusinessName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="ContactEmail" class="form-control" placeholder="Contact Email" type="email" required />
+                                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="Password" class="form-control" placeholder="Password" type="password"
+                                       title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" required />
+
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" type="password"
+                                       title="Please enter the same Password as above" required />
+
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="ContactPerson" class="form-control" placeholder="Contact Person" type="text" />
+                                <span asp-validation-for="ContactPerson" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="ContactPhone" class="form-control" placeholder="Contact Phone" type="tel" />
+                                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="AddressLine1" class="form-control" placeholder="Address Line 1" type="text" />
+                                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="AddressLine2" class="form-control" placeholder="Address Line 2" type="text" />
+                                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="AddressLine3" class="form-control" placeholder="Address Line 3" type="text" />
+                                <span asp-validation-for="AddressLine3" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="City" class="form-control" placeholder="City" type="text" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input asp-for="Postcode" class="form-control" placeholder="Post Code" type="text" />
+                                <span asp-validation-for="Postcode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group text-center m-t20">
+                        <button type="submit" class="site-button col-lg-6 col-md-6 col-sm-6 col-xs-6" style="float:none;">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .login-form {
+        max-width: 800px;
+    }
+</style>

@@ -1,0 +1,93 @@
+﻿@model Pharmix.Web.Entities.ViewModels.IntegrationOrder.IntegrationOrderViewModel
+
+<form id="IntegrationOrderForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">@(Model.Id == 0 ? "Create" : "Edit") - Integration Order</h4>
+    </div>
+    <div class="modal-body form-horizontal">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Name" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="Name" class="form-control" placeholder="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AlocatedIsolatorId" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <select asp-for="AlocatedIsolatorId" class="form-control" asp-items="@(new SelectList(Model.Isolators,"IsolatorId", "Abbriviation"))">
+                    <option selected="selected" value="">- Select Isolator -</option>
+                </select>
+                <span asp-validation-for="AlocatedIsolatorId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AdministeredDate" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for='AdministeredDate' class='form-control'>
+                <span asp-validation-for="AdministeredDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="BookedInDate" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="BookedInDate" type="date" class="form-control ">
+                <span asp-validation-for="BookedInDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ExternalBarcode" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="ExternalBarcode" class="form-control" placeholder="External Barcode">
+                <span asp-validation-for="ExternalBarcode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ExternalOrderId" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="ExternalOrderId" class="form-control" placeholder="External Order">
+                <span asp-validation-for="ExternalOrderId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="IntegratedSystemId" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <select asp-for="IntegratedSystemId" class="form-control" asp-items="@(new SelectList(Model.IntegratedSystem,"Id", "Description"))">
+                    <option selected="selected" value="">- Select Source System -</option>
+                </select>
+                <span asp-validation-for="IntegratedSystemId" class="text-danger"></span>
+            </div>
+        </div>
+        @*<div class="form-group">
+            <label asp-for="OrderLastProgressId" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="OrderLastProgressId" class="form-control" placeholder="Order Last Progress">
+                <span asp-validation-for="OrderLastProgressId" class="text-danger"></span>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label asp-for="RequiredDate" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="RequiredDate" type="date" class="form-control">
+                <span asp-validation-for="RequiredDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ScheduledDate" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="ScheduledDate" type="date" class="form-control">
+                <span asp-validation-for="ScheduledDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-change">Save changes</button>
+    </div>
+</form>

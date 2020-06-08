@@ -1,0 +1,34 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Subscription Payment History";
+}
+
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Subscription Payment History</h2>
+        </div>
+        <div class="col-sm-4">
+            <h2><button type="button" class="btn btn-danger pull-right" id="btnCreate">Buy Subscription</button></h2>
+        </div>
+    </div>
+    <div id="divGrid"></div>
+</div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script>
+    $(function () {
+        $("#btnCreate").click(function () {
+            window.location.href = "/BuySubscription";
+        });
+
+        var callback = function (response) {
+            $("#divGrid").html(response);
+        };
+        var searchText = $("#SearchText").val();
+
+        Framework.Utility.ExecuteAjaxRequest("@Url.Action("Search")", { Page: 1, SearchText: searchText }, callback);
+        
+    });
+
+</script>

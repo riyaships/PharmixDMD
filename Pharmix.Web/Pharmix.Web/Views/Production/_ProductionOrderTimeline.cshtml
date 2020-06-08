@@ -1,0 +1,91 @@
+﻿@using Pharmix.Data.Enums
+@model Pharmix.Web.Entities.ViewModels.Production.ProductionOrderListViewModel
+        <table class="table table-responsive" id="tblProdOrders">
+            @foreach (var order in Model.Orders)
+            {
+                <tr class="@(OrderPreperationStatusEnum.Completed == order.PreperationStatus?"bg-green":"")" data-orderid="@order.OrderId" data-prepid="@order.OrderPreperationId" data-iscompleted="@(OrderPreperationStatusEnum.Completed == order.PreperationStatus)">
+                    @if (OrderPreperationStatusEnum.Started == order.PreperationStatus)
+                    {
+                        <td title="Click to pause the preparation" class="text-center bg-black action-cell" style="width: 5%;">
+                            <span><i class="fa fa-pause-circle fa-2x"></i></span>
+                        </td>
+                        <td title="Click to complete preparation" class="text-center bg-green action-cell" style="width: 5%;">
+                            <span><i class="fa fa-check-circle fa-2x"></i></span>
+                        </td>
+                        <td style="width: 15%" class="vertical-align-md bg-orange">
+                            <div class="text-center"><b>@order.ProductionDisplayTime</b></div>
+                        </td>
+                    }
+                    else if (OrderPreperationStatusEnum.Paused == order.PreperationStatus)
+                    {
+                        <td title="Click to restart the preparation" class="text-center bg-blue action-cell @(order.EnableActions? "" : "disabled")" style="width: 5%;">
+                            <span><i class="fa fa-play-circle fa-2x"></i></span>
+                        </td>
+                        <td title="Click to complete the preparation" class="text-center bg-green action-cell @(order.EnableActions? "" : "disabled")" style="width: 5%;">
+                            <span><i class="fa fa-check-circle fa-2x"></i></span>
+                        </td>
+                        <td style="width: 15%" class="vertical-align-md bg-orange">
+                            <div class="text-center"><b>@order.ProductionDisplayTime</b></div>
+                        </td>
+                    }
+                    else if (OrderPreperationStatusEnum.Completed == order.PreperationStatus)
+                    {
+                        <td title="Click to update used product stocks" class="text-center bg-black action-cell" style="width: 5%;">
+                            <span><i class="fa fa-flask fa-2x"></i></span>
+                        </td>
+                        <td title="Completed" class="text-center bg-green vertical-align-md" style="width: 5%;">
+                            <span><i class="fa fa-medkit fa-2x"></i></span>
+                        </td>
+                        <td style="width: 15%" class="vertical-align-md bg-green">
+                            <div class="text-center"><b>@order.ProductionDisplayTime</b></div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td colspan="2" title="Click to start the preparation" class="text-center bg-blue action-cell @(order.EnableActions? "" : "disabled")" style="width: 10%;">
+                            <span><i class="fa fa-play-circle fa-2x"></i></span>
+                        </td>
+                        <td style="width: 15%" class="vertical-align-md bg-teal">
+                            <div class="text-center"><b>@order.ProductionDisplayTime</b></div>
+                        </td>
+                    }
+
+                    <td class="vertical-align-md" style="width: 5%">
+                        @if (OrderPreperationStatusEnum.Started == order.PreperationStatus)
+                        {
+                            <div class="text-center"><span class="fa fa-refresh"></span></div>
+                        }
+                        else if (OrderPreperationStatusEnum.Paused == order.PreperationStatus)
+                        {
+                            <div class="text-center"><span class="fa fa-pause"></span></div>
+                        }
+                        else if (OrderPreperationStatusEnum.Completed == order.PreperationStatus)
+                        {
+                            <div class="text-center"><span class="fa fa-check"></span></div>
+                        }
+                    </td>
+                    <td>
+                        <div>
+                            <div><b>@order.OrderName</b></div>
+                            <div class="text-dim">Req. Preperation Time: @order.RequiredPreperationTimeInMins mins</div>
+                        </div>
+                    </td>
+                    <td class="vertical-align-md text-center">
+                        <small>@order.PreperationStatus.ToString()</small>
+                    </td>
+                </tr>
+            }
+            
+            @if (!Model.Orders.Any())
+            {
+                <tr>
+                    <td>
+
+                        <div class="no-result text-center text-danger">
+                            <i class="fa fa-frown-o fa-2x" aria-hidden="true"></i>
+                            <h4>No orders found..</h4>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>

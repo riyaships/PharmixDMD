@@ -1,0 +1,37 @@
+﻿@model Pharmix.Web.Entities.ViewModels.ShiftViewModel
+
+<div class="col-sm-12">
+    <form id="formShift">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ShiftId" />
+        <div class="form-group">
+            <label asp-for="ShiftTitle" class="control-label">* Shift Title</label>
+            <input asp-for="ShiftTitle" class="form-control" />
+            <span asp-validation-for="ShiftTitle" class="text-danger"></span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="StartTime" class="control-label">* Shift Start Time</label>
+                    <input asp-for="StartTime" type="time" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="EndTime" class="control-label">* Shift End Time</label>
+                    <input asp-for="EndTime" type="time" class="form-control" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveShift" class="btn btn-success">Save</button>
+            <button type="button" id="btnCancelShift" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,204 @@
+﻿@model PharmixWebApi.CustomModel.CustomReportModel
+@{ViewBag.Title = "DMD Collected Data";}
+<section class="content-header">
+    <h1>
+        Pharmix -DMD Collected Data
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="#">Reports</a></li>
+        <li class="active">Form</li>
+    </ol>
+</section>
+<!-- Main content -->
+
+
+<div class="box box-primary">
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <!-- /.form-group -->
+            <div class="form-group">
+                <a class="btn btn-primary form-control" href="/Download/DMDCollatedFlatCatalogue.zip">Download Complete Dataset</a>
+                @*<a class="btn btn-primary form-control" href="#" onclick="ExportDataToCSVData(false);">Export to CSV</a>*@
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <div class="form-group">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+
+                        <li class="active"><a href="#AllItems" data-toggle="tab" onclick="DMDColletedDataAllItems();">All Items</a></li>
+                    </ul>
+                    <div class="tab-content" style="overflow-x:scroll;">
+                        <div class="tab-pane active" id="AllItems">
+                            <table id="DMDColletedDataAllItems" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Product PackId</th>
+                                        <th>ProductPackName</th>
+                                        <th>ProductId</th>
+                                        <th>ProductName</th>
+                                        <th>VtmId</th>
+                                        <th>VtmName</th>
+                                        <th>VmpId</th>
+                                        <th>VmpName</th>
+                                        <th>VmppId</th>
+                                        <th>VmppName</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>
+
+
+<input type="hidden" id="TabId" value=@ViewBag.TabId />
+<input type="hidden" id="totalCount" value=@Model.totalCount />
+<input type="hidden" id="hdnpageId" value=@ViewBag.PageId />
+<input type="hidden" id="hdnSearchValue" value=@Model.SearchValue />
+<input type="hidden" id="hdnBusinessUser" value=@User.Identity.Name />
+
+<script>
+    $(document).ready(function () {
+        DMDColletedDataAllItems();
+        //CheckallItem();
+    });
+
+    function DMDColletedDataAllItems() {
+        $("#DMDColletedDataAllItems").DataTable().destroy();
+        var TabId = "AllItems";
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var searchValue = document.getElementById("hdnSearchValue").value;
+
+        $("#DMDColletedDataAllItems").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Changeset/LoadData?tabID=" + TabId + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&universalSearch=" + searchValue,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "initComplete": function () {
+                var $searchInput = $('div.dataTables_filter input');
+                $searchInput.unbind();
+                $searchInput.bind('keyup', function (e) {
+                    if (this.value.length > 3 || this.value.length == "") {
+                        $("#DMDColletedDataAllItems").DataTable().search(this.value).draw();
+                    }
+                });
+            }, "order": [[1, "asc"]],
+            "aaSorting": [],
+            "columnDefs":
+            [{
+                //"targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+
+
+                { "data": "ProductPackId", "name": "ProductPackId", "autoWidth": true },
+                { "data": "ProductPackName", "name": "ProductPackName", "autoWidth": true },
+                { "data": "ProductId", "name": "ProductId", "autoWidth": true },
+                { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+                { "data": "VtmId", "name": "VtmId", "autoWidth": true },
+                { "data": "VtmName", "name": "VtmName", "autoWidth": true },
+                { "data": "VmpId", "name": "VmpId", "autoWidth": true },
+                { "data": "VmpName", "name": "VmpName", "autoWidth": true },
+                { "data": "VmppId", "name": "VmppId", "autoWidth": true },
+                { "data": "VmppName", "name": "VmppName", "autoWidth": true },
+            ],
+            "fnDrawCallback": function (oSettings) {
+                // Select first tab
+                $('.nav-tabs a:first').tab('show')
+            }
+        });
+
+    }
+
+
+    function GetToChangeSetId(fromchangesetId) {
+
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#ddlChangetSetTo").html(procemessage).show();
+        var url = "/Changeset/GetToChangesetDetails/";
+        CheckallItem();
+        $.ajax({
+            url: url,
+            data: { fromchangesetId: fromchangesetId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>--Select--</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlChangetSetTo").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+    function ExportDataToCSVData(IsDownloadsqlQuery) {
+
+        var TabId = document.getElementById("TabId").value;
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var BusinessUser = document.getElementById("hdnBusinessUser").value;
+        CheckallItem();
+        var allItem = document.getElementById("AllItem").checked;
+        var url = "/Changeset/ExportDataToCSV?tabID=AllItems"  + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&allItem=" + allItem + "&BusinessUser=" + BusinessUser + "&IsDownloadsqlQuery=" + IsDownloadsqlQuery;
+
+        $.ajax({
+            url: url,
+            data: { TabId: TabId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                window.location = '@Url.Action("DownloadAttachment", "Changeset")/?pageId=' + pageId + "&IsDownloadsqlQuery=" + IsDownloadsqlQuery;
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+    function CheckallItem() {
+
+        //var allItem = document.getElementById("AllItem").checked;
+        //if (allItem) {
+        //    document.getElementById("ddlChangetSetFrom").disabled = true;
+        //    document.getElementById("ddlChangetSetTo").disabled = true;
+        //    document.getElementById("AllItems").disabled = true;
+        //}
+        //else {
+        //    document.getElementById("ddlChangetSetFrom").disabled = false;
+        //    document.getElementById("ddlChangetSetTo").disabled = false;
+        //    document.getElementById("AllItems").disabled = false;
+        //}
+
+    }
+</script>

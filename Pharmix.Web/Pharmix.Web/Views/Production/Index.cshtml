@@ -1,0 +1,71 @@
+﻿@using Pharmix.Data.Enums;
+@using Pharmix.Web.Entities.ViewModels.Production
+@model IEnumerable<Pharmix.Web.Entities.ViewModels.Production.ProductionIsolatorViewModel>
+@{
+    ViewData["Title"] = "IsolatorParent";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Production Dashboard<small>Isolators assigned to you | @DateTime.Today.ToString("D")</small></h1>
+    <ol class="breadcrumb">
+        <li><a asp-action="Index" asp-controller="Home"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Production Master</li>
+    </ol>
+</section>
+<hr />
+<!-- Main content -->
+<section class="content">
+    <div class="row" id="divProdIsos">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box @(item.IsBeingUsed? "bg-yellow" : "bg-green")">
+                    <div class="inner">
+                        <h5>@(item.IsBeingUsed ? "Using by: " + item.UserName : "Available")</h5>
+                        <p>@item.IsolatorName</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-laptop"></i>
+                    </div>
+                    @if (item.IsBeingUsed)
+                    {
+                        <a asp-action="ProductionOrders" asp-controller="Production" asp-route-isoid="@item.IsolatorId" asp-route-dt="@DateTime.Today.ToString("yyyy-MM-dd")" class="btn small-box-footer"><i class="fa fa-sign-out"></i>&nbsp;Stop</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn small-box-footer" data-isoid="@item.IsolatorId" data-dt="@DateTime.Today.ToString("yyyy-MM-dd")"><i class="fa fa-sign-in"></i>&nbsp;Start Using </a>
+                    }
+                </div>
+            </div>
+        }
+        @if (!Model.Any())
+        {
+            <div class="no-result text-center text-danger">
+                <i class="fa fa-frown-o fa-2x" aria-hidden="true"></i>
+                <h4>There are no isolators allocated to you..</h4>
+            </div>
+        }
+
+    </div>
+</section>
+<!-- /.content -->
+<script>
+    $("#divProdIsos").on('click',
+        '.small-box-footer',
+        function () {
+            if ($(this).find(".fa-sign-in").length > 0) {
+                var reqData = { IsoId: $(this).data("isoid"), Dt: $(this).data("dt"), ProcTypeId: 1 }
+                 
+                var callback = function(response) {
+                    Framework.Popup.CreateInfoPopup("Isolator start-up procedures", response, null, null, null, true);
+                };
+
+                Framework.Utility.ExecuteAjaxRequest("/Production/IsolatorProcedures", reqData, callback);
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+</script>

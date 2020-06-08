@@ -1,0 +1,194 @@
+﻿@model Pharmix.Web.Entities.ViewModels.UsedProduct.UsedProductViewModel
+
+<form id="formUsedProduct" class="form-horizontal" autocomplete="off">
+    @Html.AntiForgeryToken()
+
+    <input asp-for="UsedProductId" type="hidden" />
+    <input asp-for="Stock.IsolatorId" type="hidden" />
+    <input asp-for="Stock.IntegrationOrderId" type="hidden" />
+    <input asp-for="Stock.UsedProductStockId" type="hidden" />
+    
+    <div class="col-sm-12">
+        <div class="form-group ">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="VtmId" class="control-label">* VTM Drug</label>
+                    <div class="row">
+                        <div class="col-sm-11">@Html.DropDownListFor(p => p.VtmId, Model.VtmList, "- Search & Select VTM -", new { @class = "form-control" })</div>
+                        <div class="col-sm-1">
+                            <a class="btn btn-info pull-right" title="Click to add new VTM drug" id="linkAddNewVtm"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <span asp-validation-for="VtmId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="CustomName" class="control-label">* Drug Custom name</label>
+                    <input asp-for="CustomName" type="text" class="form-control" />
+                    <span asp-validation-for="CustomName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="Description" class="control-label">Description</label>
+                    @Html.TextAreaFor(p => p.Description, new { @class = "form-control" })
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="Stock.Notes" class="control-label"></label>
+                    <textarea asp-for="Stock.Notes" class="form-control"></textarea>
+                    <span asp-validation-for="Stock.Notes" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label asp-for="DoseAmountSize" class="control-label">* Total Dose Amount</label>
+                            <input asp-for="DoseAmountSize" type="text" class="form-control" />
+                            <span asp-validation-for="DoseAmountSize" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-5">
+                            <label asp-for="Stock.DoseAmountSizeAvailable" class="control-label">* Available Dose Amount</label>
+                            <input asp-for="Stock.DoseAmountSizeAvailable" class="form-control" />
+                            <span asp-validation-for="Stock.DoseAmountSizeAvailable" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label asp-for="DoseMeasurementUnit" class="control-label">* Unit</label>
+                            <input asp-for="DoseMeasurementUnit" class="form-control" />
+                            <span asp-validation-for="DoseMeasurementUnit" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="ConcentrationDosePerMl" class="control-label">Concentration Dose per Ml</label>
+                    <input asp-for="ConcentrationDosePerMl" type="text" class="form-control" />
+                    <span asp-validation-for="ConcentrationDosePerMl" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="Stock.StorageLocationId" class="control-label">* Storage Location</label>
+                    <select asp-for="Stock.StorageLocationId" asp-items="@Model.Stock.StorageLocationList" class="form-control"></select>
+                    <span asp-validation-for="Stock.StorageLocationId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="Stock.PackWeightWithLabel" class="control-label">Pack Weight with Label</label>
+                    <input asp-for="Stock.PackWeightWithLabel" class="form-control" />
+                    <span asp-validation-for="Stock.PackWeightWithLabel" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="Stock.LastStoredDate" class="control-label">* Last Stored Date</label>
+                    <input asp-for="Stock.LastStoredDate" type="date" class="form-control" />
+                    <span asp-validation-for="Stock.LastStoredDate" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="Stock.ExpiryDate" class="control-label">* Expiry Date</label>
+                    <input asp-for="Stock.ExpiryDate" type="date" class="form-control" />
+                    <span asp-validation-for="Stock.ExpiryDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr />
+
+    <div class="text-center">
+        <button type="button" id="btnCancelProd" class="btn btn-danger">Cancel</button>
+        <button type="button" id="btnSaveProd" class="btn btn-success">@(Model.UsedProductId>0? "Save": "Add")</button>
+    </div>
+</form>
+
+<script>
+    $("#formUsedProduct #DoseMeasurementUnitId").attr("data-placeholder", "- Select unit -").chosen({ width: "100%" });
+    $("#formUsedProduct #VtmId").attr("data-placeholder", "- Select VTM drug -").chosen({ width: "100%" });
+    $("#formUsedProduct #Stock_StorageLocationId").attr("data-placeholder", "- Select location -").chosen({ width: "100%" });
+        
+    $("#formUsedProduct #VtmId").on("change",
+        function () {
+            $("#formUsedProduct #CustomName").val($(this).val().length > 0 ? $("#formUsedProduct #VtmId option:selected").text() : "");
+        });
+
+    var exitFormActions = function () {
+        $("#divUsedProductForm").slideUp();
+        $("#divUsedProdList").slideDown();
+        $("#divUsedProductForm input[type!='hidden']").val("");
+        $("#divUsedProductForm select").val("").trigger("chosen:updated");
+    }
+
+    var callbackPopup = function (response) {
+        if (response) {
+            $("#linkSearch").trigger("click");
+            exitFormActions();
+            toastr.success("Used product has been updated successfully.");
+            return;
+        }
+        toastr.error("Used product save has failed.");
+    };
+
+    $("#btnSaveProd").click(function () {
+        var request = $("#formUsedProduct").serialize();
+
+        Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveUsedProduct")", request, callbackPopup);
+        return false;
+    });
+
+    $("#btnCancelProd").click(function() {
+        exitFormActions();
+        return false;
+    });
+
+    $("#linkAddNewVtm").click(function () {
+        $("#divVtmForm").slideDown();
+        $("#divUsedProductForm").slideUp();
+        $("#btnVtmCreate").text("Add and Select");
+        return false;
+    });
+
+    $("#btnCancelVtmCreate").click(function () {
+        $("#divVtmForm").slideUp();
+        $("#divUsedProductForm").slideDown();
+        $("#divVtmForm input[type!='hidden']").val("");
+        $("#divVtmForm select").val("").trigger("chosen:updated");
+        return false;
+    });
+
+    $("#btnVtmCreate").click(function () {
+        var callbackSave = function (response) {
+            if (response != null) {
+                toastr.success("VTM has been saved successfully.");
+                $("#divVtmForm").slideUp();
+                $("#divUsedProductForm").slideDown();
+                
+                $("#divUsedProductForm #VtmId").append("<option value='" + response.VtmId + "'>" + response.DrugName + "</option>")
+                    .val(response.VtmId)
+                    .trigger("chosen:updated");
+                
+                $("#divUsedProductForm #CustomName").val(response.DrugName);
+
+                $("#divVtmForm input[type!='hidden']").val("");
+                $("#divVtmForm select").val("").trigger("chosen:updated");
+                return;
+            }
+            toastr.error("VTM save has failed.");
+        };
+
+        var request = $("#formVtmCreate").serialize();
+        Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveVtm")", request, callbackSave);
+        return false;
+    });
+</script>

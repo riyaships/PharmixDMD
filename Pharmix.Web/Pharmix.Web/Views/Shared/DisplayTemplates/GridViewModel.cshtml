@@ -1,0 +1,161 @@
+﻿@model GridViewModel
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+
+<div id="@(Model.GridName)">
+    @if (Model.Rows != null && Model.Rows.Count > 0)
+    {
+        var searchUrl = Url.Action(Model.PagingAction, Model.PagingRoute, new { page = Model.Rows.PageNumber });
+
+        @Html.Hidden("GridSortOrder", "asc")
+        @Html.Hidden("GridSortBy", "")
+        <table class="table table-condensed table-hover table-striped table-responsive">
+            <thead>
+                <tr>
+                    @foreach (var col in Model.Columns)
+                    {
+                        if (col.AllowSort)
+                        {
+                            <th><a href="#" data-sort-by="@col.SortBy">@col.ColumnName</a></th>
+                        }
+                        else
+                        {
+                            <th>@col.ColumnName</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Rows != null)
+                {
+                    foreach (var row in Model.Rows)
+                    {
+                        <tr data-id="@row.IdentityValue">
+                            @foreach (var cell in row.Cells)
+                            {
+                                if (cell.IsImage)
+                                {
+                                    <td class="@cell.CellCss">
+                                        <img id="imgPreview" class="text-left" src="data:image;base64,@cell.CellValue" style="width:50px;height:50px;" />
+                                    </td>
+                                }
+                                else if (cell.IsLinkCell)
+                                {
+                                    <td class="@cell.CellCss">
+                                        <a class="link-cell" href="@cell.LinkUrl">
+                                            @Html.Raw(cell.CellValue)
+                                        </a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="@cell.CellCss">@Html.Raw(cell.CellValue)</td>
+                                }
+                            }
+
+                            @if (row.ActionLinks.Any())
+                            {
+                                <td class="action-cell">
+                                    @foreach (var link in row.ActionLinks)
+                                    {
+                                        if (string.IsNullOrEmpty(link.IconCss))
+                                        {
+                                            <a class="btn-sm link-action" data-linkval="@link.LinkText" href="@link.LinkUrl">@link.LinkText</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn-sm link-icon" href="@link.LinkUrl">
+                                                <span class="fa-2x @link.IconCss" title="@link.LinkTitleText"></span>
+                                            </a>
+                                        }
+
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        if (!Model.HideFooter && Model.Rows != null)
+        {
+            <div class="text-center">
+                <span>Page @(Model.Rows.PageCount < Model.Rows.PageNumber ? 0 : Model.Rows.PageNumber) of @Model.Rows.PageCount</span>
+                <span class="pull-right">
+                    <label asp-for="Rows.PageSize">Page Size&nbsp;</label>
+                    <select class="input-sm" asp-for="Rows.PageSize" id="@(Model.GridName + "PageSize")">
+                        <option value="10" selected="selected">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </span>
+                @if (Model.Rows.TotalItemCount > Model.Rows.PageSize)
+                {
+                    <span class="" id="@(Model.GridName + "Pagination")">
+                        @Html.PagedListPager(Model.Rows, page => Url.Action(Model.PagingAction, Model.PagingRoute, new {page}), new PagedListRenderOptions() {DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded})
+                    </span>
+                }
+            </div>
+        }
+
+        <script>
+            (function ($) {
+                var triggerSearch = function (url) {
+                    var callback = function (response) {    
+                        $("@("#" + Model.GridName)").replaceWith(response);
+                    };
+
+                    var sortByVal = $("#GridSortBy").val();
+                    var sortOrderVal = $("#GridSortOrder").val();
+                    var searchText = $("#SearchText").val();
+                    var pageSize = $("#@(Model.GridName + "PageSize")").val();
+
+                    Framework.Utility.ExecuteAjaxRequest(url, { SearchText: searchText, SortBy: sortByVal, SortOrder: sortOrderVal, PageSize: pageSize }, callback, null, 200);
+                }      
+
+                $("#@(Model.GridName + "PageSize")").change(function(e) {
+                    e.preventDefault();
+                    triggerSearch("@searchUrl");                   
+                    return false;
+                });
+
+                $("@("#" + Model.GridName + "Pagination a")").click(function (e) {
+                    e.preventDefault();
+                    triggerSearch($(this).attr("href"));                   
+                    return false;
+                });
+
+                $("@("#" + Model.GridName + " table thead a")").click(function () {
+                    var sortBy = $(this).data("sort-by");
+
+                    if (sortBy !== $("#GridSortBy").val())
+                        $("#GridSortOrder").val("asc");
+
+                    var searchText = $("#SearchText").val();
+                    var sortOrder = $("#GridSortOrder").val();
+                    var pageSize = $("#@(Model.GridName + "PageSize")").val();
+                    var url = "@searchUrl";
+
+                    var callback = function (response) {
+                        $("@("#" + Model.GridName)").replaceWith(response);
+
+                        $("#GridSortBy").val(sortBy);
+                        $("#GridSortOrder").val(sortOrder === "asc" ? "desc" : "asc");
+                    };
+
+                    Framework.Utility.ExecuteAjaxRequest(url, { SearchText: searchText, SortBy: sortBy, SortOrder: sortOrder, PageSize: pageSize }, callback, null, 200);
+                    return false;
+                });
+            })(jQuery)
+        </script>
+
+    }
+    else
+    {
+        <div class="no-result text-center text-danger">
+            <i class="fa fa-frown-o fa-2x" aria-hidden="true"></i>
+            <h4>No data found..</h4>
+        </div>
+    }
+</div>

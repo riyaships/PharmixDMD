@@ -1,0 +1,40 @@
+﻿@model Pharmix.Web.Entities.ViewModels.IntegrationOrder.IntegrationOrderCommentViewModel
+
+<form id="IntegrationOrderCommentForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @*//0 = Decline Order, 1 = Classify Order*@
+        <h4 class="modal-title">@(Model.State == 0 ? "Decline" : "Classify") - Integration Order</h4>
+    </div>
+    <div class="modal-body form-horizontal">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="OrderId" />
+        <input type="hidden" asp-for="State" />
+        <div class="form-group">
+            <label asp-for="Comment" class="col-sm-4 control-label"></label>
+            <div class="col-sm-8">
+                <input asp-for="Comment" class="form-control" placeholder="Comment">
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+        </div>
+        @if (Model.State == 1)
+        {
+            <div class="form-group">
+                <label asp-for="Classification" class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    <select asp-for="Classification" class="form-control" asp-items="@(new SelectList(Model.Classifications,"Id", "Description"))">
+                        <option selected="selected" value="">- Select Classification -</option>
+                    </select>
+                    <span asp-validation-for="Classification" class="text-danger"></span>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-action">Save changes</button>
+    </div>
+</form>

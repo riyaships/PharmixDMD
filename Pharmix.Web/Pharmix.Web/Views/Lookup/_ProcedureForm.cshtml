@@ -1,0 +1,25 @@
+﻿@model Pharmix.Web.Entities.ViewModels.ProcedureViewModel
+
+<div class="col-sm-12">
+    <form id="formProc">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="IsolatorProcedureId" />
+        <div class="form-group">
+            <label asp-for="Description" class="control-label">* Procedure</label>
+            @Html.TextAreaFor(p => p.Description, new { @class = "form-control" })
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group ">
+            <label asp-for="ProcedureTypeId" class="control-label">* Procedure Type</label>
+            @Html.DropDownListFor(m => m.ProcedureTypeId, Model.ProcedureTypeList, null, new { @class = "form-control" })
+        </div>
+
+        <hr />
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveProc" class="btn btn-success">Save</button>
+            <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>

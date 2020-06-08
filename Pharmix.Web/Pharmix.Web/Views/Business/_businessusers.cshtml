@@ -1,0 +1,42 @@
+﻿@model Pharmix.Web.Entities.ViewModels.BusinessUserViewModel
+
+@inject Pharmix.Web.Services.IUserService userService
+@{
+    ViewData["Title"] = "_form";
+    bool isPharmixAdmin = userService.IsPharmixAdmin(User.Identity.Name);
+}
+
+  
+<form id="BusinessUser" >
+    <div class="col-sm-12">
+
+        <span id="hdnerrorMessage">@Model.ErrorMessage</span>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="ContactEmail" value="@Model.ContactEmail" />
+        <div class="form-group">
+            <label asp-for="BusinessName" class="control-label"></label>
+            <input asp-for="BusinessName" class="form-control" />
+            <span asp-validation-for="BusinessName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="clearfix"></div>
+        <hr />
+        <div class="form-group text-right">
+            <button type="submit" id="btnbusinessSaveUser" data-dismiss="modal" aria-hidden="true" class="btn btn-success  btn-px-120">Save</button>
+            <button type="button" id="btnCancelUser" data-dismiss="modal" aria-hidden="true" class="btn btn-danger  btn-px-120">Cancel</button>
+        </div>
+
+    </div>
+</form>
+

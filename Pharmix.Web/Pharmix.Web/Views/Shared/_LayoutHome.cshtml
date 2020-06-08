@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+
+<!--[if IE 7 ]>  <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>  <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>  <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+
+    <title>@ViewData["Title"] - PHARMIX TECHNOLOGIES LTD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if lt IE 9]>
+            <script src="/NewContent/js/html5shiv.min.js"></script>
+            <script src="/NewContent/js/respond.min.js"></script>
+        <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/fontawesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/magnific-popup.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/style.min.css" />
+    <link class="skin" rel="stylesheet" type="text/css" href="/NewContent/css/skin/skin-1.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/templete.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/animations.css" />
+    <style>
+        .portfolio-item {
+            cursor: pointer;
+        }
+
+        .mx-auto {
+            margin: 0 auto;
+            float: none;
+        }
+
+        .header-nav .nav > li > a {
+            font-size: 14px !important;
+        }
+
+        input[type=checkbox]:checked + label:after {
+            left: 3px;
+        }
+    </style>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body id="bg">
+    <script src="/NewContent/js/combine.js"></script>
+    <script src="/NewContent/js/easing.min.js"></script>
+    <script src="/NewContent/js/wow.min.js"></script>
+    <script src="/NewContent/js/jquery.magnific-popup.min.js"></script>
+    <div id="loading-area"></div>
+    <div class="page-wraper">
+        <header class="site-header header header-style-1 dark">
+            <div class="top-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="dez-topbar-left">
+                            <ul class="social-bx list-inline">
+                                <li class="hidden-xs"><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                <li class="hidden-xs"><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
+                                <li class="hidden-xs"><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
+                                <li class="hidden-xs"><a href="javascript:void(0);" class="fa fa-google-plus"></a></li>
+
+                                <li><i class="fa fa-envelope"></i><a href="mailto:sales@pharmix.co.uk">sales@pharmix.co.uk</a></li>
+                                <li><i class="fa fa-phone"></i><a href="tel:+442081443354">+44 20 8144 3354</a></li>
+                            </ul>
+                        </div>
+                        <div class="dez-topbar-right list-unstyled e-p-bx ">
+                            <ul class="list-inline">
+                                <li style="padding: 7px;display: inline-block;"><a href="/Account/Login">Login To Portal</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="header" class="sticky-header header-curve main-bar-wraper">
+                <div class="main-bar bg-primary clearfix ">
+                    <div class="container clearfix">
+                        <div class="logo-header mostion"><a href="/"><img src="/NewContent/b-logo.png" width="193" height="89" alt=""></a></div>
+                        <button data-target=".header-nav" data-toggle="collapse" type="button" class="navbar-toggle collapsed"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        <div class="extra-nav disnone-md">
+                            <div class="extra-cell"><a href="/Home/SubscribeNow" class="site-button white">Buy Subscription</a></div>
+                        </div>
+                        <div class="header-nav navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/Home#intro">HOME</a></li>
+                                <li><a href="/Home#about">OVERVIEW</a></li>
+                                <li><a href="/Home#features">FEATURES</a></li>
+                                <li><a href="/Home#solutions">SOLUTIONS</a></li>
+                                <li><a href="/Home#faq">FAQ</a></li>
+                                <li><a href="/Home#contact">CONTACT</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="page-content" style="margin-top: -24px;">
+            @RenderBody()
+        </div>
+
+        <footer class="site-footer">
+            <div class="footer-top text-white footer-image overlay-black-dark bg-img-fix" style="background-image:url(/NewContent/images/background/bg3.jpg); background-attachment: fixed;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 footer-col-4">
+                            <div class="widget widget_about">
+                                <div class="logo-footer"><img src="/NewContent/f-logo.png" alt=""></div>
+                                <p class="m-t40"><strong>PHARMIX TECHNOLOGIES LTD.</strong> Lorem ipsum dolor sit amet, cons ectetur elit. Vestibulum nec odios Suspe ndisse cursus.  cons ectetur elit. Vestibulum nec odios Lorem ipsum dolor sit amet, cons ectetur elit. Vestibulum nec.</p>
+                                <ul class="dez-social-icon border dez-social-icon-lg">
+                                    <li><a href="javascript:void(0);" class="fa fa-facebook fb-btn"></a></li>
+                                    <li><a href="javascript:void(0);" class="fa fa-twitter tw-btn"></a></li>
+                                    <li><a href="javascript:void(0);" class="fa fa-linkedin link-btn"></a></li>
+                                    <li><a href="javascript:void(0);" class="fa fa-pinterest-p pin-btn"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 footer-col-4">
+                            <div class="widget widget_services">
+                                <h4 class="m-b15 text-uppercase">Our services</h4>
+                                <div class="dez-separator bg-primary"></div>
+                                <ul>
+                                    <li><a href="#portfolio-modal-1" class="portfolio-item">Bespoke Software Development</a></li>
+                                    <li><a href="#portfolio-modal-2" class="portfolio-item">My DM&D Catalogs</a></li>
+                                    <li><a href="#portfolio-modal-3" class="portfolio-item">Pharmix Schedulers</a></li>
+                                    <li><a href="#portfolio-modal-4" class="portfolio-item">PEN/OWASP Testing</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 footer-col-4">
+                            <div class="widget widget_getintuch">
+                                <h4 class="m-b15 text-uppercase">Contact us</h4>
+                                <div class="dez-separator bg-primary"></div>
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-map-marker"></i><strong>address</strong> 71-75 Shelton Street Covent Garden
+                                        London, United Kingdom, WC2H 9JQ
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-phone"></i><strong>phone</strong>
+                                        <a href="tel:+442081443354">+44 20 8144 3354</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-envelope"></i><strong>Sales</strong>
+                                        <a href="mailto:sales@pharmix.co.uk">sales@pharmix.co.uk</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-envelope"></i><strong>Technical</strong>
+                                        <a href="mailto:support@pharmix.co.uk">support@pharmix.co.uk</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer bottom part -->
+            <div class="footer-bottom bg-primary">
+                <div class="container">
+                    <div class="row text-white">
+                        <div class="col-md-12 col-sm-12 text-center"><span>Copyright &copy; 2017-@DateTime.Now.Year <a href="http://pharmix.co.uk">Pharmix Technologies Ltd</span></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <button class="scroltop fa fa-chevron-up"></button>
+    </div>
+    <script>
+        new WOW().init();
+    </script>
+    @{Html.RenderPartial("_ServicesDetailsView");}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900|Open+Sans:300,400,600,700,800|Roboto:100,300,400,500,700,900" rel="stylesheet">
+</body>
+</html>

@@ -1,0 +1,174 @@
+﻿@model Pharmix.Web.Entities.ViewModels.BusinessViewModel
+
+@inject Pharmix.Web.Services.IUserService userService
+@{
+    ViewData["Title"] = "_form";
+    bool isPharmixAdmin = userService.IsPharmixAdmin(User.Identity.Name);
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<div class="col-sm-12">
+    <form id="BusinessNewUser">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="IdentityUserId" value="@Model.IdentityUserId" />
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label asp-for="BusinessName" class="control-label"></label>
+                <input asp-for="BusinessName" class="form-control" required />
+                <span asp-validation-for="BusinessName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="AddressLine1" class="control-label"></label>
+                <input asp-for="AddressLine1" class="form-control" />
+                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="AddressLine2" class="control-label"></label>
+                <input asp-for="AddressLine2" class="form-control" />
+                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="AddressLine3" class="control-label"></label>
+                <input asp-for="AddressLine3" class="form-control" />
+                <span asp-validation-for="AddressLine3" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="Postcode" class="control-label"></label>
+                <input asp-for="Postcode" class="form-control" />
+                <span asp-validation-for="Postcode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="ContactPerson" class="control-label"></label>
+                <input asp-for="ContactPerson" class="form-control" />
+                <span asp-validation-for="ContactPerson" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+
+            <div class="form-group">
+                <label asp-for="ContactPhone" class="control-label"></label>
+                <input asp-for="ContactPhone" class="form-control" />
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="ContactEmail" class="control-label"></label>
+                <input asp-for="ContactEmail" class="form-control" required />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="form-group">
+                <label asp-for="DmdAmp" class="control-label"></label>
+                <input asp-for="DmdAmp" class="form-control" value="DmdAmp"/>
+                <span asp-validation-for="DmdAmp" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="DmdAmpp" class="control-label"></label>
+                <input asp-for="DmdAmpp" class="form-control" required value="DmdAmpp"/>
+                <span asp-validation-for="DmdAmpp" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="form-group">
+                <label asp-for="DmdVmp" class="control-label"></label>
+                <input asp-for="DmdVmp" class="form-control" value="DmdVmp"/>
+                <span asp-validation-for="DmdVmp" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="DmdVmpp" class="control-label"></label>
+                <input asp-for="DmdVmpp" class="form-control" required value="DmdVmpp"/>
+                <span asp-validation-for="DmdVmpp" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="form-group">
+                <label asp-for="DmdVtm" class="control-label"></label>
+                <input asp-for="DmdVtm" class="form-control" value="DmdVtm"/>
+                <span asp-validation-for="DmdVtm" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="DmdForm" class="control-label"></label>
+                <input asp-for="DmdForm" class="form-control" required value="DmdForm"/>
+                <span asp-validation-for="DmdForm" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+
+            <div class="form-group">
+                <label asp-for="DmdGtin" class="control-label"></label>
+                <input asp-for="DmdGtin" class="form-control" value="DmdGtin" />
+                <span asp-validation-for="DmdGtin" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="DmdRoute" class="control-label"></label>
+                <input asp-for="DmdRoute" class="form-control" required  value="DmdRoute"/>
+                <span asp-validation-for="DmdRoute" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="DmdSupplier" class="control-label"></label>
+                <input asp-for="DmdSupplier" class="form-control" required value="DmdSupplier"/>
+                <span asp-validation-for="DmdSupplier" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label>Notify Monthly</label>
+                    @Html.RadioButton("NotifyWeekly", false, Model.NotifyWeekly != true)
+                    @*<input type="radio" group="NotifyWeekly" name="NotifyWeekly" value="1" @(Model.NotifyWeekly==true?"checked":"") />*@
+                </div>    <div class="col-sm-6">
+                    <label>Notify Weekly</label>
+                    @Html.RadioButton("NotifyWeekly", true, Model.NotifyWeekly == true)
+                    @*<input type="radio" group="NotifyWeekly" name="NotifyWeekly" value="1" @(Model.NotifyWeekly!=true?"checked":"")/>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <hr />
+        <div class="form-group text-right">
+            <button type="button" id="btnSaveUser" data-dismiss="modal" aria-hidden="true" class="btn btn-success btn-px-120 ">Save</button>
+            <button type="button" id="btnCancelUser" data-dismiss="modal" aria-hidden="true" class="btn btn-danger btn-px-120 ">Cancel</button>
+        </div>
+    </form>
+</div>
+
+

@@ -1,0 +1,41 @@
+﻿<html lang="en">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	
+		<link rel="stylesheet" type="text/css" media="screen" href="css/escScheduler.css" />
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="js/escScheduler.js"></script>
+    </head>
+    
+	<script>
+		$(document).ready(function() {
+			escScheduler.init({
+				elementId: "scheduler1", // id of a div
+				jsonFile: "scheduler.json", // name of a json file
+				beggingDate: "2017-03-12", // integer or a specific date (examples: -3, 0, 3, 2017-03-12)
+				numDates: "30", // positive integer
+				width: "auto", // number in pixels or percentage (examples: 120px, 150px, 50%, 70%, auto, 120px - auto, 50% - auto)
+				alignment: "center", // 'left', 'center' and 'right'
+				enableArrows: true, // true/false
+				colors: {
+					overlay: "black", // 'black', 'green', 'blue', 'red', 'cyan', 'pink', 'purple' and 'orange'
+					arrows: "blue", // 'black', 'green', 'blue', 'red', 'cyan', 'pink', 'purple' and 'orange'
+					defaultEventLine: "black" // any color in css format (name or hex value)
+				},
+				dateType: "both", // 'days', 'months' and 'both'
+				flashSpaceInterval: "10", // positive integer
+				localization: "en-US", // country ISO code
+				differDateWithEvents: true, // true/false
+				loadMousewheelPlugin: true // true/false
+			});
+		});
+	</script>
+	
+    <body>
+        <div id="scheduler1">
+		</div>
+    </body>
+</html>

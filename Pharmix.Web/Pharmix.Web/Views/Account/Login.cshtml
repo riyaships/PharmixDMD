@@ -1,0 +1,142 @@
+﻿@using System.Linq
+@using Pharmix.Data.Entities.Context
+@using Pharmix.Web.Entities
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    string message = ViewBag.Message ?? string.Empty;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<!--[if IE 7 ]>  <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>  <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>  <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+
+    <title>Log in - PHARMIX TECHNOLOGIES LTD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if lt IE 9]>
+            <script src="/NewContent/js/html5shiv.min.js"></script>
+            <script src="/NewContent/js/respond.min.js"></script>
+        <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/fontawesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/magnific-popup.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/style.min.css" />
+    <link class="skin" rel="stylesheet" type="text/css" href="/NewContent/css/skin/skin-1.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/templete.css" />
+    <link rel="stylesheet" type="text/css" href="/NewContent/css/animations.css" />
+    <style>
+        .portfolio-item {
+            cursor: pointer;
+        }
+
+        .mx-auto {
+            margin: 0 auto;
+            float: none;
+        }
+
+        .page-content {
+            margin: 0;
+        }
+    </style>
+</head>
+<body id="bg">
+    <script src="/NewContent/js/combine.js"></script>
+    <div class="page-wrapers">
+        <!-- Content -->
+        <div class="page-content dez-login p-t50 overlay-black-dark bg-img-fix" style="background-image:url(/NewContent/images/main-slider/slide01.jpg);">
+            <div class="login-form relative z-index3 ">
+                <div class="tab-content">
+                    <div id="login" class="tab-pane active text-center">
+                        <form asp-action="Login" autocomplete="off" class="p-a30 dez-form m-t80" method="post" role="form" novalidate="novalidate" id="pharmix-login-form">
+                            <div class="alert alert-success col-md-" id="loginMessage" role="alert" style="display:none;">
+                                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                @message
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <h3 class="form-title m-t0">Sign In</h3>
+                            <div class="dez-separator-outer m-b5">
+                                <div class="dez-separator bg-primary style-liner"></div>
+                            </div>
+                            <p>Please login using your existing account. </p>
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                @Html.TextBoxFor(t => t.Email, new { Value = "pharmix@pharmix.co.uk", @class = "form-control", @placeholder = "Enter your email address", @required = "" })
+                                @Html.ValidationMessageFor(v => v.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(t => t.Password, new { Value = "Pharmix123#", @class = "form-control", @placeholder = "Enter your password", @required = "" })
+                                @Html.ValidationMessageFor(v => v.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group text-left">
+                                <button type="submit" class="site-button">login</button>
+                                <label>
+                                    @Html.CheckBoxFor(c => c.RememberMe)
+                                    <label for="RememberMe">Remember me</label>
+                                </label>
+                                <a data-toggle="tab" href="#forgot-password" class="m-l15"><i class="fa fa-unlock-alt"></i> Forgot Password</a>
+                            </div>
+                        </form>
+                        @{
+                            var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                            if (loginProviders.Count > 0)
+                            {
+                                <form action="/account/ExternalLogin" autocomplete="off" class="form-horizontal" method="post" role="form" novalidate="novalidate">
+                                    @Html.AntiForgeryToken()
+                                    <div class="log-with-social">
+                                        <p class="text-center no-margin">- or log in with your social accounts:</p>
+                                        @foreach (var provider in loginProviders)
+                                        {
+                                            <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                                        }
+                                    </div>
+                                </form>
+                            }
+                        }
+                        <div class="bg-primary p-a15 "><a href="/Account/Join" class="text-white">Create an account</a> </div>
+                    </div>
+                    <div id="forgot-password" class="tab-pane fade ">
+                        <form asp-action="ForgotPassword" class="p-a30 dez-form m-t100 text-center" autocomplete="off" method="post" role="form" id="pharmix-forgot-login-form">
+                            <h3 class="form-title m-t0">Forget Password ?</h3>
+                            <div class="dez-separator-outer m-b5">
+                                <div class="dez-separator bg-primary style-liner"></div>
+                            </div>
+                            <p>Enter your e-mail address below to reset your password. </p>
+                            <div class="form-group">
+                                <input name="Email" required="" class="form-control" placeholder="Email Id" type="text" />
+                            </div>
+                            <div class="form-group text-left">
+                                <a class="site-button outline gray" data-toggle="tab" href="#login">Back</a>
+                                <button class="site-button pull-right">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+</body>
+</html>

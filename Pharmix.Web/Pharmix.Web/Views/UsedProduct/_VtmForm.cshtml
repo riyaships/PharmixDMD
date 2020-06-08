@@ -1,0 +1,43 @@
+﻿@model Pharmix.Web.Entities.ViewModels.UsedProduct.VtmViewModel
+
+<div class="col-sm-12">
+    <form id="formVtmCreate" class="form-horizontal" autocomplete="off">
+        @Html.AntiForgeryToken()
+        <input asp-for="VtmId" type="hidden" />
+        <div class="form-group">
+            <label asp-for="DrugName" class="control-label">Drug Name</label>
+            <input asp-for="DrugName" class="form-control" />
+            <span asp-validation-for="DrugName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DmdId" class="control-label">DMD ID</label>
+            <input asp-for="DmdId" class="form-control" />
+            <span asp-validation-for="DmdId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DmdSupplierId" class="control-label">DMD Supplier</label>
+            @Html.DropDownListFor(p => p.DmdSupplierId, Model.DmdSupplierList, "- Select DMD supplier -", new { @class = "form-control" })
+            <span asp-validation-for="DmdSupplierId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DmdRouteId" class="control-label">DMD Route</label>
+            @Html.DropDownListFor(p => p.DmdRouteId, Model.DmdRouteList, "- Select DMD route -", new { @class = "form-control" })
+            <span asp-validation-for="DmdRouteId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BrandName" class="control-label">Brand</label>
+            <input asp-for="BrandName" class="form-control" />
+            <span asp-validation-for="BrandName" class="text-danger"></span>
+        </div>
+
+        <hr />
+        <div class="text-center">
+            <button type="button" id="btnCancelVtmCreate" class="btn btn-danger">Cancel</button>
+            <button type="button" id="btnVtmCreate" class="btn btn-success">@(Model.VtmId > 0 ? "Save" : "Create")</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#DmdSupplierId,#DmdRouteId").attr("data-placeholder", "- Select -").chosen({ width: "100%" });  
+</script>

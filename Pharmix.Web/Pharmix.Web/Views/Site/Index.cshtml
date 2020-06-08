@@ -1,0 +1,97 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Site Dashboard";
+}
+
+<div class="form-horizontal">
+    <div class="">
+        <h2>Site Dashboard</h2>
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-sm-6">
+                @Html.DisplayFor(m => m)
+            </div>
+            <button type="button" class="btn btn-danger pull-right" id="btnCreateSite">Create New</button>
+        </div>
+    </div>
+    <div id="divSiteGrid"></div>
+</div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script>
+    (function ($) {
+        $("#SearchText").on("input",
+            function() {
+                $("#linkSearch").trigger("click");
+            });
+
+        var initializeFormEvents = function() {
+            $("#btnSaveSite").click(function () {
+                if ($("#formSite").valid()) {
+                    var callbackSave = function (response) {
+                        $("#linkSearch").trigger("click");
+                        $("#formSite").closest(".modal").modal("hide");
+                    };
+
+                    var request = $("#formSite").serialize();
+
+                    Framework.Utility.ExecuteAjaxRequest("@Url.Action("Save")", request, callbackSave);
+                    return false;
+                }
+                else
+                    return false;
+            });
+        }
+
+        var showPopup = function(id) {
+            var callback = function (response) {
+                Framework.Popup.CreateInfoPopup(id > 0 ? "Edit Site" : "Create Site", response, null, null, null, true, initializeFormEvents);
+            };
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("Get")", { Id: id }, callback);
+        }
+
+        var performDeletion = function (id) {
+            var deleteProduct = function () {
+                var callback = function() {
+                    $("#linkSearch").trigger("click");
+                };
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("Delete")", { Id: id }, callback);
+            }
+
+            Framework.Popup.CreateConfirmationPopup("Confrim Deletion", "Are you sure want to delete this item?", deleteProduct);
+        }
+
+        $("#btnCreateSite").click(function () {
+            showPopup(0);
+            return false;
+        });
+
+        $("#divSiteGrid").on("click", "table tbody a", function () {
+            var id = $(this).closest("tr").data("id");
+            var $iconAction = $(this).find(".fa");
+
+            if ($iconAction.hasClass("fa-edit")) {
+                showPopup(id);
+            } else if ($iconAction.hasClass("fa-trash")) {
+                performDeletion(id);
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divSiteGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("Search")", { Page: 1, SearchText: searchText }, callback);
+            return false;
+        });
+
+        setTimeout(function() {
+            $("#linkSearch").trigger("click");
+        }, 200);
+    })(jQuery)
+</script>

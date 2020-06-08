@@ -1,0 +1,74 @@
+﻿@model Pharmix.Web.Models.IsolatorVIewModels.IsolatorOfflineViewModel
+
+<div class="col-sm-12">
+    <form id="formIsoOffline">
+        <h3>@Model.IsolatorName - Offline details</h3>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="IsolatorId" />
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label">* Start date</label>
+                    <input asp-for="StartDate" type="date" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label">* End date</label>
+                    <input asp-for="EndDate" type="date" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AllShifts" class="control-label">* All Shifts :</label>&nbsp;&nbsp;
+            <input asp-for="AllShifts" type="radio" value="True" data-toggle="collapse" data-target="#divShiftSection" />&nbsp;Yes&nbsp;&nbsp;
+            <input asp-for="AllShifts" type="radio" value="False" data-toggle="collapse" data-target="#divShiftSection" />&nbsp;No
+        </div>
+
+        <div class="form-group collapse @(Model.AllShifts?"":"in")" id="divShiftSection">
+            <label asp-for="SelectedShifts" class="control-label">* Shifts</label>
+            @Html.DropDownListFor(m => m.SelectedShifts, Model.ShiftList, new { @class = "form-control", multiple = true })
+        </div>
+        
+        <div class="form-group">
+            <i class="fa fa-warning fa-2x text-warning"></i>&nbsp;&nbsp;
+            <input type="checkbox" id="cbConfirmWarning" />&nbsp;
+            <span class="form-control-static"><span>All the orders scheduled for preperation will be unscheduled and all the staffs allocated will be unallocated on these dates/shifts.</span></span>
+        </div>
+
+        <hr />
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveIsoOffline" class="btn btn-success" disabled="disabled">Save</button>
+            <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+<script>
+    $("#SelectedShifts").chosen({ width: "100%" }).prop("placeholder", "Select Staffs..");
+
+    $("#cbConfirmWarning").click(function() {
+        $("#btnSaveIsoOffline").prop("disabled", !$(this).is(":checked"));
+    });
+
+    $("#btnSaveIsoOffline").click(function () {
+        var callbackSave = function (response) {
+            if (response) {
+                $("#formIsoOffline").closest(".modal").modal("hide");
+                toastr.success("Isolator offline details has been saved successfully.");
+                return;
+            }
+            toastr.error("Isolator offline details save has failed.");
+        };
+
+        var request = $("#formIsoOffline").serialize();
+        Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveIsolatorOfflineDetail")", request, callbackSave);
+        return false;
+    });
+</script>
+

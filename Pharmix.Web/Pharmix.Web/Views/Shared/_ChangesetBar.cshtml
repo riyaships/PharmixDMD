@@ -1,0 +1,103 @@
+﻿@model PharmixWebApi.Model.Dmd_BusinessChangeSetDetails
+
+<style>
+    .treeview-menu .box-body label {
+        color: #8aa4af !important;
+    }
+
+        .treeview-menu .box-body label:hover {
+            color: white !important;
+        }
+</style>
+
+<li class="treeview menu-open">
+    <a href="#">
+        <i class="fa fa-cubes"></i>
+        <span>@Model.ToDateChangeset</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+
+    <ul class="treeview-menu" style="display:block;">
+        <li>
+            <div class="box-body" style="border:solid;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-12">
+                            <label>ChangetSet From</label><br />
+                            <span style="color:white">@Model.FromDateChangeset</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>ChangetSet To</label><br />
+                            <span style="color:white" id="hdnval">   @Model.ToDateChangeset</span>
+                        </div>
+                        <div class="form-group col-md-12">
+
+                            <div class="form-group">
+                                @*@Html.ActionLink("Download", "ExportDataToCSV", "Changeset", new {
+                                        tabID = "MyBuniessChangeset",
+                                        changetSetFrom = Model.FromDateChangesetId,
+                                        changetSetTo= Model.ToDateChangesetId,
+                                        changetSetFromId = Model.FromDateChangeset,
+                                        changetSetToId = Model.ToDateChangeset,
+                                        BusinessUser = User.Identity.Name
+                                    }, new { @class = "btn btn-primary btn-px-120" })*@
+                                <a class="btn btn-primary btn-px-120" href="#" onclick="MyChangesetExportDataToCSVData();">Download</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+    </ul>
+</li>
+
+
+<input type="hidden" id="changetSetFrom" value=@Model.FromDateChangesetId />
+<input type="hidden" id="changetSetTo" value=@Model.ToDateChangesetId />
+<input type="hidden" id="changetSetFromId" value="@Model.FromDateChangeset" />
+<input type="hidden" id="hdnchangetSetToId" value="@Model.ToDateChangeset" />
+<input type="hidden" id="BusinessUser" value=@User.Identity.Name />
+
+<script type="text/javascript">
+
+
+    function MyChangesetExportDataToCSVData() {
+
+        var TabId = "MyBuniessChangeset";
+        var changetSetFrom = document.getElementById("changetSetFrom").value;
+        var changetSetTo = document.getElementById("changetSetTo").value;
+        var changetSetFromId = document.getElementById("changetSetFromId").value;
+        var changetSetToId = document.getElementById("hdnchangetSetToId").value;
+        var BusinessUser = document.getElementById("BusinessUser").value;
+
+
+        var url = "/Changeset/ExportDataToCSV?tabID=" + TabId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&changetSetFromId=" + changetSetFromId + "&changetSetToId=" + changetSetToId + "&BusinessUser=" + BusinessUser;
+        // var url = "/Changeset/TestData";
+        $.ajax({
+            url: url,
+            data: { TabId: TabId },
+            cache: false,
+            type: "POST",
+
+            success: function (data) {
+                var fadeDuration = 800;
+                var fadeDelay = 5000;
+                var successAlert = $('#success-alert');
+                successAlert.show();
+                setTimeout(function () {
+                    successAlert.fadeToggle(fadeDuration);
+                }, fadeDelay);
+            },
+            error: function (reponse) {
+                debugger;
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+</script>

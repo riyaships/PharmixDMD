@@ -1,0 +1,403 @@
+﻿@model PharmixWebApi.CustomModel.CustomReportModel
+@{ViewBag.Title = "Gtin Details";}
+<section class="content-header">
+    <h1>
+        Pharmix -Gtin Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="#">Reports</a></li>
+        <li class="active">Gtin</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">filters</h3>
+            <div class="material-switch pull-right" style="padding-right:800px;">
+                <input id="AllItem" name="AllItem" type="checkbox" onclick="CheckallItem();" />All Items &nbsp;
+                <label for="AllItem" class="label-success"></label>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>ChangetSet From</label>
+                        @if (Model.DmdChangeSetDetails != null)
+                        {
+                            <select class="form-control select2" style="width: 100%;" onchange="GetToChangeSetId(this.value);"
+                                    id="ddlChangetSetFrom" name="ddlChangetSetFrom"
+                                    asp-items="@(new SelectList(Model.DmdChangeSetDetails, "DmdChangeSetDetailID", "Description"))"></select>
+                        }
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+
+                        <a class="btn btn-primary form-control" href="#AllItems" data-toggle="tab" onclick="GetGtinDetailsForAllItems();" id="FetchReport"
+                           name="FetchReport">Fetch Report</a>
+
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-success form-control" href="#" onclick="ExportDataToCSVData(true);">Download SQL</a>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>ChangetSet To</label>
+                            <select id="ddlChangetSetTo" name="ddlChangetSetTo" class="form-control select2" style="width: 100%;">
+                                <option value="0">--Select--</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <a class="btn btn-primary form-control" href="#" onclick="ExportDataToCSVData(false);">Export to CSV</a>
+                    </div>
+
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<div class="box-body">
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <div class="form-group">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+
+                        <li class="active"><a href="#AllItems" data-toggle="tab" onclick="GetGtinDetailsForAllItems();">All Items </a></li>
+                        <li><a href="#ToBeInserted" data-toggle="tab" onclick="GetGtinDetailsForInsert();">To Be Inserted </a></li>
+                        <li><a href="#ToBeUpdated" data-toggle="tab" onclick="GetGtinDetailsForUpdate();">To Be Updated</a></li>
+                        <li><a href="#ToBeDeleted" data-toggle="tab" onclick="GetGtinDetailsForDelete();">To Be Deleted </a></li>
+
+                    </ul>
+                    <div class="tab-content" style="overflow-x:scroll;">
+                        <div class="tab-pane active" id="AllItems">
+                            <table id="GtinDetailsAllItems" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>                                       
+                                        <th>GTINDATAGTIN Current</th>
+                                        <th>GTINDATASTARTDT Current</th>                                     
+                                        <th>GTINDATAGTIN Previous</th>
+                                        <th>GTINDATASTARTDT Previous</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="ToBeInserted">
+                            <table id="GtinDetails" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>                                      
+                                        <th>GTINDATAGTIN</th>
+                                        <th>GTINDATASTARTDT</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="ToBeUpdated">
+                            <table id="GtinDetailsUpdate" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>                                       
+                                        <th>GTINDATAGTIN Current</th>
+                                        <th>GTINDATASTARTDT Current</th>                                       
+                                        <th>GTINDATAGTIN Previous</th>
+                                        <th>GTINDATASTARTDT Previous</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="ToBeDeleted">
+                            <table id="GtinDetailsDelete" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>                                        
+                                        <th>GTINDATAGTIN</th>
+                                        <th>GTINDATASTARTDT</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>
+
+
+<input type="hidden" id="TabId" value=@ViewBag.TabId />
+<input type="hidden" id="totalCount" value=@Model.totalCount />
+<input type="hidden" id="hdnpageId" value=@ViewBag.PageId />
+<input type="hidden" id="hdnSearchValue" value=@Model.SearchValue />
+<input type="hidden" id="hdnBusinessUser" value=@User.Identity.Name />
+<script>
+    $(document).ready(function () {
+        GetGtinDetailsForAllItems();
+        CheckallItem();
+    });
+
+    function GetGtinDetailsForAllItems() {
+        $("#GtinDetailsAllItems").DataTable().destroy();
+        var TabId = "AllItems";
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var searchValue = document.getElementById("hdnSearchValue").value;
+
+        $("#GtinDetailsAllItems").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Changeset/LoadData?tabID=" + TabId + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&universalSearch=" + searchValue,
+                "type": "POST",
+                "datatype": "json"
+            }, "initComplete": function () {
+                var $searchInput = $('div.dataTables_filter input');
+                $searchInput.unbind();
+                $searchInput.bind('keyup', function (e) {
+                    if (this.value.length > 3 || this.value.length == "") {
+                        $("#GtinDetailsAllItems").DataTable().search(this.value).draw();
+                    }
+                });
+            },
+            "columnDefs":
+            [{
+                //"targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+
+               
+                
+                { "data": "GTINDATAGTINChangeset", "name": "GTINDATAGTINChangeset", "autoWidth": true },
+                { "data": "GTINDATASTARTDTChangeset", "name": "GTINDATASTARTDTChangeset", "autoWidth": true },             
+                { "data": "GTINDATAGTINLive", "name": "GTINDATAGTINLive", "autoWidth": true },
+                { "data": "GTINDATASTARTDTLive", "name": "GTINDATASTARTDTLive", "autoWidth": true },
+            ],
+            "fnDrawCallback": function (oSettings) {
+                // Select first tab
+                $('.nav-tabs a:first').tab('show')
+            }
+        });
+
+    }
+
+    function GetGtinDetailsForInsert() {
+        $("#GtinDetails").DataTable().destroy();
+        var TabId = "ToBeInserted";
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var searchValue = document.getElementById("hdnSearchValue").value;
+
+        $("#GtinDetails").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Changeset/LoadData?tabID=" + TabId + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&universalSearch=" + searchValue,
+                "type": "POST",
+                "datatype": "json"
+            }, "initComplete": function () {
+                var $searchInput = $('div.dataTables_filter input');
+                $searchInput.unbind();
+                $searchInput.bind('keyup', function (e) {
+                    if (this.value.length > 3 || this.value.length == "") {
+                        $("#GtinDetails").DataTable().search(this.value).draw();
+                    }
+                });
+            },
+            "columnDefs":
+            [{
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+                          
+                { "data": "GTINDATAGTINChangeset", "name": "GTINDATAGTINChangeset", "autoWidth": true },
+                { "data": "GTINDATASTARTDTChangeset", "name": "GTINDATASTARTDTChangeset", "autoWidth": true },
+            ]
+        });
+    }
+
+    function GetGtinDetailsForUpdate() {
+        $("#GtinDetailsUpdate").DataTable().destroy();
+        var TabId = "ToBeUpdated";
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var searchValue = document.getElementById("hdnSearchValue").value;
+
+        $("#GtinDetailsUpdate").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Changeset/LoadData?tabID=" + TabId + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&universalSearch=" + searchValue,
+                "type": "POST",
+                "datatype": "json"
+            }, "initComplete": function () {
+                var $searchInput = $('div.dataTables_filter input');
+                $searchInput.unbind();
+                $searchInput.bind('keyup', function (e) {
+                    if (this.value.length > 3 || this.value.length == "") {
+                        $("#GtinDetailsUpdate").DataTable().search(this.value).draw();
+                    }
+                });
+            },
+            "columnDefs":
+            [{
+                //"targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+               
+                { "data": "GTINDATAGTINChangeset", "name": "GTINDATAGTINChangeset", "autoWidth": true },
+                { "data": "GTINDATASTARTDTChangeset", "name": "GTINDATASTARTDTChangeset", "autoWidth": true },               
+                { "data": "GTINDATAGTINLive", "name": "GTINDATAGTINLive", "autoWidth": true },
+                { "data": "GTINDATASTARTDTLive", "name": "GTINDATASTARTDTLive", "autoWidth": true },
+            ]
+        });
+
+    }
+
+    function GetGtinDetailsForDelete() {
+        $("#GtinDetailsDelete").DataTable().destroy();
+        var TabId = "ToBeDeleted";
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var searchValue = document.getElementById("hdnSearchValue").value;
+
+        $("#GtinDetailsDelete").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Changeset/LoadData?tabID=" + TabId + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&universalSearch=" + searchValue,
+                "type": "POST",
+                "datatype": "json"
+            }, "initComplete": function () {
+                var $searchInput = $('div.dataTables_filter input');
+                $searchInput.unbind();
+                $searchInput.bind('keyup', function (e) {
+                    if (this.value.length > 3 || this.value.length == "") {
+                        $("#GtinDetailsDelete").DataTable().search(this.value).draw();
+                    }
+                });
+            },
+            "columnDefs":
+            [{
+                //"targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+                           
+                { "data": "GTINDATAGTINLive", "name": "GTINDATAGTINLive", "autoWidth": true },
+                { "data": "GTINDATASTARTDTLive", "name": "GTINDATASTARTDTLive", "autoWidth": true },
+            ]
+        });
+
+    }
+
+    function GetToChangeSetId(fromchangesetId) {
+
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#ddlChangetSetTo").html(procemessage).show();
+        var url = "/Changeset/GetToChangesetDetails/";
+        CheckallItem();
+        $.ajax({
+            url: url,
+            data: { fromchangesetId: fromchangesetId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>--Select--</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlChangetSetTo").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+    function ExportDataToCSVData(IsDownloadsqlQuery) {
+
+        var TabId = document.getElementById("TabId").value;
+        var totalCount = document.getElementById("totalCount").value;
+        var pageId = document.getElementById("hdnpageId").value;
+        var changetSetFrom = $("#ddlChangetSetFrom").val();
+        var changetSetTo = $("#ddlChangetSetTo").val();
+        var BusinessUser = document.getElementById("hdnBusinessUser").value;
+        CheckallItem();
+        var allItem = document.getElementById("AllItem").checked;
+        var url = "/Changeset/ExportDataToCSV?tabID=" + TabId + "&TotalCount=" + totalCount + "&PageId=" + pageId + "&changetSetFrom=" + changetSetFrom + "&changetSetTo=" + changetSetTo + "&allItem=" + allItem + "&BusinessUser=" + BusinessUser + "&IsDownloadsqlQuery=" + IsDownloadsqlQuery;
+
+        $.ajax({
+            url: url,
+            data: { TabId: TabId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                window.location = '@Url.Action("DownloadAttachment", "Changeset")/?pageId=' + pageId + "&IsDownloadsqlQuery=" + IsDownloadsqlQuery;
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+    function CheckallItem() {
+
+        var allItem = document.getElementById("AllItem").checked;
+        if (allItem) {
+            document.getElementById("ddlChangetSetFrom").disabled = true;
+            document.getElementById("ddlChangetSetTo").disabled = true;
+            document.getElementById("AllItems").disabled = true;
+        }
+        else {
+            document.getElementById("ddlChangetSetFrom").disabled = false;
+            document.getElementById("ddlChangetSetTo").disabled = false;
+            document.getElementById("AllItems").disabled = false;
+        }
+
+    }
+</script>

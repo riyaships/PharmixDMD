@@ -1,0 +1,54 @@
+﻿@model Pharmix.Web.Models.IsolatorVIewModels.IsolatorMappedProcedureViewModel
+
+<div class="col-sm-12">
+    <h4>@Model.IsolatorName</h4>
+    <form id="formIsoProc">
+        @Html.HiddenFor(p => p.IsolatorId)
+        @Html.AntiForgeryToken()
+        <div class="form-group ">
+            <label asp-for="StartProcedures" class="control-label">Start-up procedures</label>
+            <select class="form-control" id="StartProcedures" multiple="multiple" name="StartProcedures">
+                @foreach (var item in Model.StartProcedureList)
+                {
+                    <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                }
+            </select>
+            @*@Html.DropDownListFor(m => m.StartProcedures, Model.StartProcedureList, new {@class = "form-control", multiple = "multiple" })*@
+        </div>
+        <div class="form-group ">
+            <label asp-for="StopProcedures" class="control-label">Stop procedures</label>
+            <select class="form-control" id="StopProcedures" multiple="multiple" name="StopProcedures">
+                @foreach (var item in Model.StopProcedureList)
+                {
+                    <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                }
+            </select>
+            @*@Html.DropDownListFor(m => m.StopProcedures, Model.StopProcedureList, new {@class = "form-control", multiple="multiple"})*@
+        </div>
+
+        <hr />
+        <div class="text-center">
+            <button type="button" id="btnSaveIsoProc" class="btn btn-success">Save</button>
+            <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#StartProcedures,#StopProcedures").attr("data-placeholder", "- Select -").chosen({ width: "100%"});
+
+    $("#btnSaveIsoProc").click(function () {
+        var callbackSave = function (response) {
+            if (response) {
+                $("#formIsoProc").closest(".modal").modal("hide");
+                toastr.success("Isolator procedures has been saved successfully.");
+                return;
+            }
+            toastr.error("Isolator procedures save has failed.");
+        };
+
+        var request = $("#formIsoProc").serialize();
+        Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveIsolatorProcedures")", request, callbackSave);
+        return false;
+    });
+</script>

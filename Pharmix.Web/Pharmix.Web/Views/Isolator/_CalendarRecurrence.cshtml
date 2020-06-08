@@ -1,0 +1,70 @@
+﻿@using Pharmix.Data.Enums
+@model Pharmix.Web.Models.IsolatorVIewModels.IsolatorStaffAllocationViewModel
+@{
+    var mo = Model.SelectedDays;
+}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="" id="divRecurringType">
+            <input asp-for="RecurringType" value="@RecurringTypeEnum.Daily" id="recurringTypeDaily" checked type="radio" />&nbsp;<label for="recurringTypeDaily">Daily</label>&nbsp;&nbsp;&nbsp;
+            <input asp-for="RecurringType" value="@RecurringTypeEnum.Weekly" id="recurringTypeWeely" type="radio" />&nbsp;<label for="recurringTypeWeely">Weekly</label>&nbsp;&nbsp;
+            @*<input asp-for="RecurringType" value="@RecurringTypeEnum.Monthly" type="radio" />&nbsp;Monthly*@
+        </div>
+    </div>
+    <div class="panel-body">
+        <div id="divRecurringTypeContent">
+            <div class="" id="divDailyRecurring" @(Model.RecurringType == RecurringTypeEnum.Daily?"":"style=display:none")>
+                <input asp-for="DailyRecurringType" value="EveryWeekday" type="radio" id="dailyTypeEw" />&nbsp;<label for="dailyTypeEw">Every weekday (Monday-Friday)</label>&nbsp;&nbsp;&nbsp;
+                <input asp-for="DailyRecurringType" value="Everyday" type="radio" id="dailyTypeE" />&nbsp;<label for="dailyTypeE">Everyday</label>
+            </div>
+
+            <div class="" id="divWeeklyRecurring" @(Model.RecurringType == RecurringTypeEnum.Weekly ? "" : "style=display:none")>
+                <label asp-for="SelectedDays" class="control-label">Recur every week on these day(s), </label>
+                @*@(Model.IsolatorStaffAllocationId > 0 ? Html.DropDownListFor(m => m.SelectedDays, Model.DayList, new { @class = "form-control", multiple = "multiple", disabled = "disabled" }) : Html.DropDownListFor(m => m.SelectedDays, Model.DayList, new { @class = "form-control", multiple = "multiple" }))*@
+                
+                <select class="form-control" id="SelectedDays" multiple="multiple" name="SelectedDays" data-placeholder="- Select days -" @(Model.IsolatorStaffAllocationId > 0? "disabled":"")>
+                    @foreach (var day in Model.DayList)
+                    {
+                        <option value="@day.Value" selected="@day.Selected" >@day.Text</option>
+                    }
+                </select>
+            </div>
+
+            @*<div class="" id="divMonthlyRecurring" style="display: none">
+                    <div class="form-group">
+                        <label asp-for="Monthly.SelectedWeeks" class="control-label">Week(s)</label>
+                        @Html.DropDownListFor(m => m.Monthly.SelectedWeeks, Model.Monthly.WeekList, "- Select Week -", new { @class = "form-control" }))
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Monthly.SelectedDays" class="control-label">Day(s)</label>
+                        @Html.DropDownListFor(m => m.Monthly.SelectedDays, Model.Monthly.DayList, "- Select Day -", new { @class = "form-control" }))
+                    </div>
+                </div>*@
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="">
+        <label asp-for="RecurrenceEndDate" class="control-label">Recurrence end date: </label>
+        <input asp-for="RecurrenceEndDate" type="date" class="form-control"/>
+    </div>
+    </div>
+</div>
+
+
+<script>
+    $("#divRecurringType").on("click", "input[type='radio']", function () {
+        $("#divRecurringTypeContent div[id$='Recurring']").hide();
+        $("#divRecurringTypeContent #div" + $(this).val()+"Recurring").show();
+    });
+
+    $("#SelectedDays").attr("data-placeholder", "- Select days -").chosen({ width: "100%" });
+
+    $("#EveryWeekday").click(function () {
+        $(this).prop("value", "True");
+        $("#Everyday").attr("checked", false).prop("value","False");
+    });
+    $("#Everyday").click(function() {
+        $(this).prop("value", "True");
+        $("#EveryWeekday").attr("checked", false).prop("value", "False");
+    });
+</script>

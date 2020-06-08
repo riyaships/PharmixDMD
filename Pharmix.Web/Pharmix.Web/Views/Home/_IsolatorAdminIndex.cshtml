@@ -1,0 +1,65 @@
+﻿
+<div class="row">
+    <div class="col-sm-4">
+        <a asp-action="Index" asp-controller="Isolator" class="card" title="Click to enter">
+            <span class="fa fa-cog fa-3x"></span>&nbsp;
+            Configure isolator
+            <div class="card-body">
+                <h4><b>Isolator</b></h4>
+                <p>Isolator create, update, remove & setup offline dates</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="card" asp-action="IsolatorStaffAllocationIndex" asp-controller="Isolator" title="Click to enter">
+            <span class="fa fa-users fa-3x text-primary"></span>&nbsp;
+            Manage staff allocation
+            <div class="card-body">
+                <h4><b>Isolator staff</b></h4>
+                <p>Isolator staff allocation create, update, remove and setup recurring</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="card" asp-action="OrderSchedulingIndex" asp-controller="Isolator" title="Click to enter">
+            <span class="fa fa-medkit fa-3x text-danger"></span>&nbsp;
+            Schedule integration orders
+            <div class="card-body">
+                <h4><b>Schedule integration orders</b></h4>
+                <p>Schedule orders for preperation, unschedule</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <a class="card" asp-action="ProcedureIndex" asp-controller="Lookup" title="Click to enter">
+            <span class="fa fa-list fa-3x text-success"></span>&nbsp;
+            Manage isolator start/stop procedures
+            <div class="card-body">
+                <h4><b>Isolator start/stop procedures</b></h4>
+                <p>isolator start/stop procedures create, update and remove</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="card" asp-action="ShiftIndex" asp-controller="Lookup" title="Click to enter">
+            <span class="fa fa-calendar fa-3x text-success"></span>&nbsp;
+            Manage isolator shifts
+            <div class="card-body">
+                <h4><b>Isolator shift</b></h4>
+                <p>Shift create, update and remove</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="card" asp-action="SupervisorRequestTracking" asp-controller="Production" title="Click to enter">
+            <span class="fa fa-bell fa-3x text-warning"></span>&nbsp;
+            Manage isolator staff requests
+            <div class="card-body">
+                <h4><b>Isolator staff requests</b></h4>
+                <p>Track and respond requested</p>
+            </div>
+        </a>
+    </div>
+</div>

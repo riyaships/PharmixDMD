@@ -1,0 +1,107 @@
+﻿@model SearchViewModel
+
+@{
+    ViewBag.Title = "Shift Dashboard";
+    Layout = "_Layout";
+}
+
+<div class="form-horizontal">
+    <div class="">
+        <h2>Shift Dashboard</h2>
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-xs-6 col-sm-4">
+                @Html.DisplayFor(m => m)
+            </div>
+            <button type="button" class="btn btn-danger pull-right small-box" id="btnCreateShift">Create New</button>
+        </div>
+
+    </div>
+    <div id="divShiftGrid">
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $("#SearchText").on("input",
+            function() {
+                $("#linkSearch").trigger("click");
+            });
+
+        var initializeFormEvents = function() {
+            $("#btnSaveShift").click(function () {
+                var callbackSave = function (response) {
+                    if (response) {
+                        $("#linkSearch").trigger("click");
+                        $("#formShift").closest(".modal").modal("hide");
+                        toastr.success("Shift has been saved successfully.");
+                        return;
+                    }
+                    toastr.error("Shift save has failed.");
+                };
+
+                var request = $("#formShift").serialize();
+
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveShift", "Lookup")", request, callbackSave);
+                return false;
+            });
+        }
+
+        var showPopup = function(id) {
+            var callback = function (response) {
+                Framework.Popup.CreateInfoPopup(id > 0 ? "Edit Shift" : "Create Shift", response, null, null, null, true, initializeFormEvents);
+            };
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetShift", "Lookup")", { Id: id }, callback);
+        }
+
+        var performDeletion = function (id) {
+            var deleteShift = function () {
+                var callback = function (response) {
+                    if (response.IsSuccess) {
+                        $("#linkSearch").trigger("click");
+                        toastr.success("Shift has been deleted successfully.");
+                        return;
+                    }
+                    toastr.error(response.Message);
+                };
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("DeleteShift", "Lookup")", { Id: id }, callback);
+            }
+
+            Framework.Popup.CreateConfirmationPopup("Confrim Deletion", "Are you sure want to delete this item?", deleteShift);
+        }
+
+        $("#btnCreateShift").click(function () {
+            showPopup(0);
+            return false;
+        });
+
+        $("#divShiftGrid").on("click", ".table a", function () {
+            var id = $(this).closest("tr").data("id");
+            var $iconAction = $(this).find(".fa");
+
+            if ($iconAction.hasClass("fa-edit")) {
+                showPopup(id);
+            } else if ($iconAction.hasClass("fa-trash")) {
+                performDeletion(id);
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divShiftGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("SearchShift", "Lookup")", { Page: 1, SearchText: searchText }, callback, null, 200);
+            return false;
+        });
+
+        setTimeout(function() {
+            $("#linkSearch").trigger("click");
+        }, 200);
+    })(jQuery)
+</script>
+

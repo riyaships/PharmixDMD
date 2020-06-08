@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Pharmix.Web.Entities.PackagePlan>
+@{
+    ViewData["Title"] = "Buy Subscription";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    int counter = 0;
+}
+<style>
+    .pricingtable-features {
+        padding: 50px 10px;
+    }
+</style>
+<div class="dez-bnr-inr overlay-black-middle" style="background-image:url(/NewContent/images/main-slider/slide01.jpg);">
+    <div class="container">
+        <div class="dez-bnr-inr-entry">
+            <h1 class="text-white">Buy Subscription</h1>
+        </div>
+    </div>
+</div>
+<div class="content-area bg-white ">
+    <div class="container">
+        <div class="p-a30 m-b30">
+            <div class="pricingtable-row m-b30">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        string classes = "";
+                        if (counter == 1)
+                        { classes = "pricingtable-highlight"; }
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <div class="pricingtable-wrapper">
+                                <div class="pricingtable-inner @classes">
+                                    <div class="pricingtable-price"> <span class="pricingtable-bx">£@item.Price</span> <span class="pricingtable-type">@item.Duration</span> </div>
+                                    <div class="pricingtable-title">
+                                        <h2>@item.PackageName</h2>
+                                    </div>
+                                    <div class="pricingtable-features">
+                                        @item.Details
+                                    </div>
+                                    <div class="pricingtable-footer">
+                                        <a href="@Url.Action("SignUp", "Home", new { id = item.Id})" type="button" class="btn btn-primary">Sign Up</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        counter++;
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,133 @@
+﻿@using Pharmix.Web.Models.IsolatorVIewModels
+@model Pharmix.Web.Models.IsolatorVIewModels.IsolatorViewModel
+
+<div class="col-sm-12">
+    <form id="formIsolator">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="IsolatorId" />
+        <div class="form-group">
+            <label asp-for="Abbriviation" class="control-label"></label>
+            <input asp-for="Abbriviation" class="form-control" />
+            <span asp-validation-for="Abbriviation" class="text-danger"></span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label asp-for="TotalNumberOfDosesPerSession" class="control-label">Total Number Of Doses Per Session</label>
+            <input asp-for="TotalNumberOfDosesPerSession" class="form-control" />
+            <span asp-validation-for="TotalNumberOfDosesPerSession" asp-validation-message="Total Number Of Doses Per Session field is required." class="text-danger"></span>
+        </div>
+
+        @*<div class="form-group">
+            <label asp-for="MinIsolatorPressure">Isolator Pressure :</label>
+            <div class="row">
+                <div class="col-sm-4">
+                    <input asp-for="MinIsolatorPressure" class="form-control" placeholder="Minimum" />
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="MaxIsolatorPressure" class="form-control" placeholder="Maximum" />
+                </div>
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.IsolatorPressureUnit, Model.PressureUnitList, null, new { @class = "form-control", placeholder = "Unit" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="OperationType" class="control-label">Operation Type</label>
+            @Html.DropDownListFor(m => m.OperationType, Model.OperationTypeList, null, new { @class = "form-control" })
+            <span asp-validation-for="OperationType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="RadiiOfIsolatorChamber" class="control-label">Radii of Isolator chamber</label>
+                    <input asp-for="RadiiOfIsolatorChamber" class="form-control" />
+                    <span asp-validation-for="RadiiOfIsolatorChamber" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="RequiredChamberGradient" class="control-label">Required Chamber Gradient</label>
+                    <input asp-for="RequiredChamberGradient" class="form-control" />
+                    <span asp-validation-for="RequiredChamberGradient" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TightnessTestRequired" class="control-label">Tightness Test Required?</label>&nbsp;&nbsp;
+            <span class="form-control-static">
+                <input asp-for="TightnessTestRequired" type="radio" value="True" id="isTightnessTestYes" />&nbsp;<label for="isTightnessTestYes">Yes</label>&nbsp;&nbsp;&nbsp;
+                <input asp-for="TightnessTestRequired" type="radio" value="False" id="isTightnessTestNo" />&nbsp;<label for="isTightnessTestNo">No</label>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="GloveTestRequired" class="control-label">Glove Test Required?</label>&nbsp;&nbsp;
+            <span class="form-control-static">
+                <input asp-for="GloveTestRequired" type="radio" value="True" id="isGloveTestYes" />&nbsp;<label for="isGloveTestYes">Yes</label>&nbsp;&nbsp;&nbsp;
+                <input asp-for="GloveTestRequired" type="radio" value="False" id="isGloveTestNo" />&nbsp;<label for="isGloveTestNo">No</label>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="LastHEPAFilterVerifiedDate" class="control-label">Last HEPA Filter Verified Date</label>
+                    <input asp-for="LastHEPAFilterVerifiedDate" type="date" class="form-control" />
+                    <span asp-validation-for="LastHEPAFilterVerifiedDate" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="LastVHPSterilisationDate" class="control-label">Last VHP Sterilisation Date</label>
+                    <input asp-for="LastVHPSterilisationDate" type="date" class="form-control" />
+                    <span asp-validation-for="LastVHPSterilisationDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MinIsolatorPressure">Latest Pressure :</label>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input asp-for="LatestPressure" class="form-control" placeholder="Pressure" />
+                </div>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.LatestPressureUnit, Model.LatestPressureUnitList, null, new { @class = "form-control", placeholder = "Unit" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LatestTemperature">Latest Temperature :</label>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input asp-for="LatestTemperature" class="form-control" placeholder="Temperature" />
+                </div>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.LatestTemperatureUnit, Model.TemperatureUnitList, null, new { @class = "form-control", placeholder = "Unit" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LatestHumidity">Latest Humidity :</label>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input asp-for="LatestHumidity" class="form-control" placeholder="Pressure" />
+                </div>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.LatestHumidityUnit, Model.TemperatureUnitList, null, new { @class = "form-control", placeholder = "Unit" })
+                </div>
+            </div>
+        </div>*@
+        
+        <hr />
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveIso" class="btn btn-success">Save</button>
+            <button type="button" id="btnCancelIso" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $("select").attr("data-placeholder", "Unit").chosen({ width: "100%" });
+</script>

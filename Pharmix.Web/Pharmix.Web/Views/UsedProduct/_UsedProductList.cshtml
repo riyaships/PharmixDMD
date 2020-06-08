@@ -1,0 +1,114 @@
+﻿@model Pharmix.Web.Entities.ViewModels.UsedProduct.UsedProductListViewModel
+
+<div class="col-sm-12">
+    <div class="text-info h4">
+        <b>@Model.IntegrationOrderName - Used products</b>
+    </div>
+
+    <div class="col-sm-12" id="divUsedProdList">
+        <input asp-for="IsolatorId" type="hidden" />
+        <input asp-for="IntegrationOrderId" type="hidden" />
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-xs-6 col-sm-4">
+                @Html.DisplayFor(m => m)
+            </div>
+            <button type="button" class="btn btn-primary pull-right" id="btnAddUsedProd">Add Used Product</button>
+        </div>
+        <div id="divUsedProductGrid">
+            <div class="no-result text-center text-danger">
+                <i class="fa fa-smile-o fa-2x" aria-hidden="true"></i>
+                <h4>Order's used product will be listed here..</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info" id="divVtmForm" style="display: none">
+        <div class="panel-heading">Add VTM Drug</div>
+        <div class="panel-body">
+            @Html.Partial("_VtmForm", Model.VtmViewModel)
+        </div>
+    </div>
+
+    <div class="panel panel-primary" id="divUsedProductForm" style="display: none">
+        <div class="panel-heading">Add Used Product</div>
+        <div class="panel-body"></div>
+    </div>
+
+    <div class="clearfix"></div>
+    <hr />
+    <div class="pull-right">
+        <button type="button" id="btnCloseProdList" data-dismiss="modal" class="btn btn-danger">Close</button>
+    </div>
+</div>
+
+<script>
+        var showForm = function(id) {
+            var callback = function (response) {
+                $("#divUsedProductForm .panel-heading:eq(0)").html(id > 0 ? "Edit Used Product" :"Add Used Product");
+                $("#divUsedProductForm .panel-body:eq(0)").html(response);
+                
+                $("#divUsedProductForm").slideDown();
+                $("#divUsedProdList").slideUp();
+            };
+
+            var req = { Id: id, isoid: $("#divUsedProdList #IsolatorId").val(), orderid: $("#divUsedProdList #IntegrationOrderId").val() };
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetUsedProductForm", "UsedProduct")", req, callback);
+        }
+
+        var performRemoval = function (id) {
+            var removeAction = function () {
+                var callback = function (response) {
+                    if (response.IsSuccess) {
+                        $("#linkSearch").trigger("click");
+                        toastr.success(response.Message);
+                        return;
+                    }
+                    toastr.error(response.Message);
+                };
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("RemoveUsedProduct", "UsedProduct")", { Id: id }, callback);
+            }
+
+            Framework.Popup.CreateConfirmationPopup("Removal Confrimation", "Are you sure want to remove this item?", removeAction);
+        }
+
+        $("#btnAddUsedProd").click(function() {
+            showForm(0);
+            return false;
+        });
+
+        $("#divUsedProductGrid").on("click",
+            ".table a",
+            function() {
+                var id = $(this).closest("tr").data("id");
+                var $iconAction = $(this).find(".fa");
+
+                if ($iconAction.hasClass("fa-edit")) {
+                    showForm(id);
+                } else if ($iconAction.hasClass("fa-trash")) {
+                    performRemoval(id);
+                }
+
+                return $(this).attr("href") !== "#";
+            });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divUsedProductGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetAllUsedProductsForOrder", "UsedProduct")", { Page: 1, SearchText: searchText, orderId: $("#IntegrationOrderId").val() }, callback, null, 200);
+            return false;
+        });
+
+        $("#SearchText").on("input",
+            function() {
+                $("#linkSearch").trigger("click");
+        });
+
+        setTimeout(function() {
+            $("#linkSearch").trigger("click");
+        }, 200);
+
+</script>

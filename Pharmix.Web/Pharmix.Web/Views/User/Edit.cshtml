@@ -1,0 +1,10 @@
+﻿@model Pharmix.Data.Entities.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Customer Register";
+}
+
+@{
+    <hr class="no-margin">
+
+    { Html.RenderPartial("_form.cshtml", Model); }
+}

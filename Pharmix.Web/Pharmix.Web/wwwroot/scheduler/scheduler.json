@@ -1,0 +1,456 @@
+[{
+	"date": "2017-03-12",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 1",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-12",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 2",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-12",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 3",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-12",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 4",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-12",
+	"time": "21:00",
+	"place": "Moscow",
+	"title": "Event 5",
+	"description": "Some event description",
+	"lineColor": "cyan"
+}, {
+	"date": "2017-03-13",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 6",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-13",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 7",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-13",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 8",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-16",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 9",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-16",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 10",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-16",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 11",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-16",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 12",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-16",
+	"time": "21:00",
+	"place": "Moscow",
+	"title": "Event 13",
+	"description": "Some event description",
+	"lineColor": "cyan"
+}, {
+	"date": "2017-03-18",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 14",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-18",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 15",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-19",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 16",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-19",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 17",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-19",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 18",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-19",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 19",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-20",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 20",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-20",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 21",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-20",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 22",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-20",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 23",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-23",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 24",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-23",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 25",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-23",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 26",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-25",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 27",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-25",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 28",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-25",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 29",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-25",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 30",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-25",
+	"time": "21:00",
+	"place": "Moscow",
+	"title": "Event 31",
+	"description": "Some event description",
+	"lineColor": "cyan"
+}, {
+	"date": "2017-03-26",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 32",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-26",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 33",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-26",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 34",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-27",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 35",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-27",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 36",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-27",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 37",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-27",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 38",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-28",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 39",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-28",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 40",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-28",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 41",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-28",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 42",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-03-28",
+	"time": "21:00",
+	"place": "Moscow",
+	"title": "Event 43",
+	"description": "Some event description",
+	"lineColor": "cyan"
+}, {
+	"date": "2017-03-31",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 44",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-03-31",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 45",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-03-31",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 46",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-03-31",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 47",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-04-02",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 48",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-04-02",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 49",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-04-02",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 50",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-04-03",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 51",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-04-03",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 52",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-04-03",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 53",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-04-03",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 54",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-04-06",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 55",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-04-06",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 56",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-04-06",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 57",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-04-06",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 58",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-04-08",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 59",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-04-08",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 60",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-04-08",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 61",
+	"description": "Some event description",
+	"lineColor": "white"
+}, {
+	"date": "2017-04-08",
+	"time": "19:00",
+	"place": "Tokyo",
+	"title": "Event 62",
+	"description": "Some event description",
+	"lineColor": "green"
+}, {
+	"date": "2017-04-09",
+	"time": "13:00",
+	"place": "Paris",
+	"title": "Event 63",
+	"description": "Some event description",
+	"lineColor": "red"
+}, {
+	"date": "2017-04-09",
+	"time": "15:00",
+	"place": "New York",
+	"title": "Event 64",
+	"description": "Some event description",
+	"lineColor": "black"
+}, {
+	"date": "2017-04-09",
+	"time": "17:00",
+	"place": "London",
+	"title": "Event 65",
+	"description": "Some event description",
+	"lineColor": "white"
+}]

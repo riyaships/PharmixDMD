@@ -1,0 +1,109 @@
+﻿@model Pharmix.Web.Models.IsolatorVIewModels.IsolatorStaffAllocationViewModel
+
+<div class="col-sm-12">
+    <form id="FormStaffAllocation" class="form-horizontal col-sm-12" autocomplete="off">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.IsolatorId)
+        @Html.HiddenFor(m => m.IsolatorStaffAllocationId)
+        @Html.HiddenFor(m => m.AllocatedDate)
+        @Html.Hidden("hfAllocatedDateFormated", Model.AllocatedDate.ToString("yyyy-MM-dd"))
+        @Html.HiddenFor(m => m.IsolatorShiftId)
+
+        <div class="text-info h4">
+            <b>@Model.ShiftDescription - @Model.AllocatedDate.ToString("D")</b>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group ">
+                <label asp-for="StaffId" class="control-label">* Staff</label>
+                @(Model.IsolatorStaffAllocationId > 0 ? Html.DropDownListFor(m => m.StaffId, Model.IsolatorStaffList, new { @class = "form-control", disabled = "disabled" }) : Html.DropDownListFor(m => m.StaffId, Model.IsolatorStaffList, new { @class = "form-control" }))
+            </div>
+
+            <div class="form-group" id="divRecurrenceYesNo">
+                @Html.Label("ShiftIdLbl", "* Recurrence :", new { @class = "control-label" })&nbsp;&nbsp;
+                <span class="form-control-static">
+                    <input asp-for="IsRecurring" type="radio" value="True" id="isRecurYes" />&nbsp;<label for="isRecurYes">Yes</label>&nbsp;&nbsp;&nbsp;
+                    <input asp-for="IsRecurring" type="radio" value="False" id="isRecurNo" />&nbsp;<label for="isRecurNo">No</label>
+                </span>
+            </div>
+
+            <div id="divRecurringContent" class="row" @(Model.IsRecurring ? "" : "style=display:none")>
+                @Html.Partial("_CalendarRecurrence", Model)
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr />
+
+        <button type="button" id="btnCloseAllocation" data-dismiss="modal" class="btn btn-danger pull-left">Close</button>
+        @if (!Model.IsModelReadonly)
+        {
+        <div class="pull-right">
+            @if (Model.IsolatorStaffAllocationId > 0)
+            {
+                <button type="button" id="btnRemoveAllocation" class="btn btn-warning">Remove Allocation</button>
+                <button type="button" id="btnEditAllocation" class="btn btn-primary">Edit Allocation</button>
+                <button type="button" id="btnCancelEdit" class="btn btn-danger" style="display:none">Cancel</button>
+            }
+
+            <button type="button" id="btnSaveAllocation" class="btn btn-success" style="@(Model.IsolatorStaffAllocationId > 0 ? "display:none" : "")">Submit</button>
+        </div>
+        }
+    </form>
+</div>
+
+<script>
+    if ("@Model.IsolatorStaffAllocationId" > 0) {
+        $("#FormStaffAllocation input,select").prop("disabled", true);
+    }
+
+    $("#StaffId").attr("data-placeholder", "- Select staff -").chosen({ width:"100%" });
+
+    var callbackPopup = function (response) {
+        if (response) {
+            var scheduledDate = $('#hfAllocatedDateFormated').val();
+            $("#isoScheduler .escDatesContainer .escDateBox[formateddate='" + scheduledDate + "']").trigger("click");
+            $("#FormStaffAllocation").closest(".modal").modal("hide");
+            toastr.success("Isolator staff allocation has been saved successfully.");
+            return;
+        }
+        toastr.error("Isolator staff allocation save has failed.");
+    };
+
+    $("#btnSaveAllocation").click(function () {
+        var request = $("#FormStaffAllocation").serialize();
+
+        Framework.Utility.ExecuteAjaxRequest("/isolator/CreateIsolatorStaffAllocation", request, callbackPopup);
+        return false;
+    });
+
+    $("#btnEditAllocation").click(function () {
+        $("#FormStaffAllocation input,select").prop("disabled", false);
+        $("#FormStaffAllocation select").trigger("chosen:updated");
+        $("#btnEditAllocation").hide();
+        $("#btnSaveAllocation,#btnCancelEdit").show();
+    });
+
+    $("#btnCancelEdit").click(function() {
+        $("#FormStaffAllocation input,select").prop("disabled", true);
+        $("#btnEditAllocation").show();
+        $("#btnSaveAllocation,#btnCancelEdit").hide();
+    });
+
+    $("#btnRemoveAllocation").click(function () {
+        var removeAllocation = function () {
+            Framework.Utility.ExecuteAjaxRequest("/isolator/RemoveIsolatorStaffAllocation", { AllocationId: $("#FormStaffAllocation #IsolatorStaffAllocationId").val() }, callbackPopup);
+        }
+
+        var msg =
+            '<i class="fa fa-warning fa-2x text-warning"></i>&nbsp;Removing this allocation will result all the orders scheduled for preperation on this date and shift will be unsheduled. Are you sure want to proceed?';
+
+        Framework.Popup.CreateConfirmationPopup("Confrim Removal", msg, removeAllocation);
+    });
+
+    $("#isRecurYes").on("click", function () {
+        $("#divRecurringContent").slideDown();
+    });
+    $("#isRecurNo").on("click", function () {
+        $("#divRecurringContent").slideUp();
+    });
+</script>

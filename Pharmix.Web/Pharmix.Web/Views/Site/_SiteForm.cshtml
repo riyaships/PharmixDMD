@@ -1,0 +1,20 @@
+﻿@model Pharmix.Web.Entities.ViewModels.SiteViewModel
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<div class="col-sm-12">
+    <form id="formSite">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id"/>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="clearfix"></div>
+        <hr/>
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveSite" class="btn btn-success">Save</button>
+            <button type="button" id="btnCancelSite" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>

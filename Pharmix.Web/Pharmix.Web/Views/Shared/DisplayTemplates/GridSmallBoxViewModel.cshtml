@@ -1,0 +1,103 @@
+﻿@model GridBoxViewModel
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+
+<div id="@(Model.GridName)" class="row">
+    @if (Model.Rows != null && Model.Rows.Count > 0)
+    {
+        var searchUrl = Url.Action(Model.PagingAction, Model.PagingRoute, new { page = Model.Rows.PageNumber });
+
+        @Html.Hidden("GridSortOrder", "asc")
+        @Html.Hidden("GridSortBy", "")
+
+        <div class="table table-condensed table-hover table-responsive">
+            <div>
+                @if (Model.Rows != null)
+                {
+                    foreach (var row in Model.Rows)
+                    {
+                        <div class="small-box bg-teal small-box-hover" data-entityid="@row.IdentityValue" draggable="@(Model.IsBoxDraggable? "true":"false")" 
+                             @foreach (var dic in row.DataAttriDictionary)
+                             {
+                                @Html.Raw(string.Format("data-{0}={1}", dic.Key, dic.Value))
+                             }>
+                            <div class="inner text-bold">
+                                <h4 class="">@row.BoxHeading</h4>
+                            </div>
+                            <div class="icon">
+                                <i class="@Model.BackgroundIconCss"></i>
+                            </div>
+                            <div class="small-box-footer" style="display: @(Model.ShowBodyContentOnHover?"none":"block")">
+                                @foreach (var dic in row.BoxBodyDictionary)
+                                {
+                                    <div class="">
+                                        <label asp-for="@dic.Value">@dic.Key : </label>
+                                        <span class="form-control-static">@dic.Value</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        if (!Model.HideFooter && Model.Rows != null)
+        {
+            <div class="text-center">
+                <span>Page @(Model.Rows.PageCount < Model.Rows.PageNumber ? 0 : Model.Rows.PageNumber) of @Model.Rows.PageCount</span>
+                <span class="pull-right">
+                    <label asp-for="Rows.PageSize">Page Size&nbsp;</label>
+                    <select class="input-sm" asp-for="Rows.PageSize" id="@(Model.GridName + "PageSize")">
+                        <option value="10" selected="selected">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </span>
+                @if (Model.Rows.TotalItemCount > Model.Rows.PageSize)
+                {
+                    <span class="" id="@(Model.GridName + "Pagination")">
+                        @Html.PagedListPager(Model.Rows, page => Url.Action(Model.PagingAction, Model.PagingRoute, new { page }), new PagedListRenderOptions() { DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded })
+                    </span>
+                }
+            </div>
+        }
+
+        <script>
+            (function ($) {
+                var triggerSearch = function (url) {
+                    var callback = function (response) {
+                        $("@("#" + Model.GridName)").replaceWith(response);
+                    };
+
+                    var sortByVal = $("#GridSortBy").val();
+                    var sortOrderVal = $("#GridSortOrder").val();
+                    var searchText = $("#SearchText").val();
+                    var pageSize = $("#@(Model.GridName + "PageSize")").val();
+
+                    Framework.Utility.ExecuteAjaxRequest(url, { SearchText: searchText, SortBy: sortByVal, SortOrder: sortOrderVal, PageSize: pageSize }, callback, null, 200);
+                }
+
+                $("#@(Model.GridName + "PageSize")").change(function(e) {
+                    e.preventDefault();
+                    triggerSearch("@searchUrl");
+                    return false;
+                });
+
+                $("@("#" + Model.GridName + "Pagination a")").click(function (e) {
+                    e.preventDefault();
+                    triggerSearch($(this).attr("href"));
+                    return false;
+                });
+            })(jQuery)
+        </script>
+
+    }
+    else
+    {
+        <div class="no-result text-center text-danger">
+            <i class="fa fa-frown-o fa-2x" aria-hidden="true"></i>
+            <h4>No data found..</h4>
+        </div>
+    }
+</div>

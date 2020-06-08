@@ -1,0 +1,21 @@
+﻿@model Pharmix.Web.Models.ManageViewModels.GroupViewModel
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<div class="col-sm-12">
+    <form id="formGroup">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="TrustId" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="clearfix"></div>
+        <hr />
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveGroup" class="btn btn-success">Save</button>
+            <button type="button" id="btnCancelGroup" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>

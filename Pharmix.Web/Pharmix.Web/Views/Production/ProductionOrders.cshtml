@@ -1,0 +1,104 @@
+﻿@using Pharmix.Data.Enums
+@model Pharmix.Web.Entities.ViewModels.Production.ProductionOrderListViewModel
+
+@{
+    ViewBag.Title = "Production Orders";
+    Layout = "_Layout";
+}
+
+<section class="content-header">
+    <h1 class="row">Production Orders<small>@Model.ProductionDate.ToString("D") | @Model.ProductionShift</small></h1>
+    <ol class="breadcrumb">
+        <li><span><i class="fa fa-dashboard"></i> Home</span></li>
+        <li><span>Production Master</span></li>
+        <li class="active">Production Orders</li>
+    </ol>
+</section>
+<section class="content" id="contProducionOrders">
+    @Html.HiddenFor(p => p.IsolatorId)
+    <div class="bg-black">
+        <table class="table">
+            <tr>
+                <td><h4><span class="fa fa-laptop"></span> @Model.IsolatorName <sub>@DateTime.Today.ToString("D") | @Model.ProductionShift</sub></h4></td>
+                <td class="bg-black-gradient" id="linkExitIso" style="width: 10%; cursor: pointer; vertical-align: middle;">
+                    <div class="text-center"><i class="fa fa-sign-out"></i>&nbsp;Stop Isolator</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divOrderTimeline">
+        @Html.Partial("_ProductionOrderTimeline", Model)
+    </div>
+    <button id="btnCreateRequest" class="btn btn-sm btn-success btn-bottom-right"><i class="fa fa-3x fa-commenting-o"></i></button>
+</section>
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+   
+    <script src="~/js/Production/production-isolator.js"></script>
+}
+
+<script>
+    var showStopProc = function() {
+        var reqData = { IsoId: "@Model.IsolatorId", Dt: "@Model.ProductionDate", ProcTypeId: 2 }
+
+        var callback = function(response) {
+            Framework.Popup.CreateInfoPopup("Isolator stop procedures", response, null, "modal-fullwidth", null, true);
+        };
+
+        Framework.Utility.ExecuteAjaxRequest("/Production/IsolatorProcedures", reqData, callback);
+    }
+
+    $("#linkExitIso").click(function () {
+        if ($("#tblProdOrders tr[data-iscompleted!='True']").length > 0) {
+            var msg =
+                "<i class='fa fa-warning fa-2x text-warning'></i>&nbsp;&nbsp;There are one or more orders yet to be completed. Are you sure want to stop the isolator?";
+            Framework.Popup.CreateConfirmationPopup("Pending Orders", msg, showStopProc);
+        } else {
+            showStopProc();
+        }
+    });
+
+    var showUsedProductForm = function(reqData) {
+        var callback = function (response) {
+            Framework.Popup.CreateInfoPopup("Used products", response, null, "modal-fullwidth", null, true);
+        };
+
+        Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetUsedProductList", "UsedProduct")", reqData, callback);
+    }
+
+    $("#divOrderTimeline").on("click",
+        "#tblProdOrders .action-cell:not('.disabled')",
+        function () {
+            var reqData = { PrepOrderId: $(this).closest("tr").data("prepid"), StatusId: 0 };
+            var reqDataUsedProd = { OrderId: $(this).closest("tr").data("orderid"), IsoId:"@Model.IsolatorId" };
+            
+            if ($(this).find(".fa-play-circle").length > 0) {
+                reqData.StatusId = "@((int)OrderPreperationStatusEnum.Started)";
+            } else if ($(this).find(".fa-pause-circle").length > 0) {
+                reqData.StatusId = "@((int)OrderPreperationStatusEnum.Paused)";
+            } else if ($(this).find(".fa-check-circle").length > 0) {
+                reqData.StatusId = "@((int)OrderPreperationStatusEnum.Completed)";
+            }else if ($(this).find(".fa-flask").length > 0) {
+                showUsedProductForm(reqDataUsedProd);
+                return false;
+            }
+
+            var callback = function (response) {
+                toastr.success("Order has been " + response + " successfully.");
+                var updateTimeline = function (responseTimeline) {
+                    $("#divOrderTimeline").html(responseTimeline);
+                    if (reqData.StatusId == "@((int)OrderPreperationStatusEnum.Completed)") {
+                        Framework.Popup.CreateConfirmationPopup("Used Products", "Order has been completed, do you wish to update used products from this order?, press YES to update now or press Skip to update later.", showUsedProductForm, reqDataUsedProd, null, null, true);
+                    }
+                }
+
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetPoductionOrderTimeline")", { isoid: "@Model.IsolatorId", dt: "@Model.ProductionDate.ToString("yyyy-MM-dd")" }, updateTimeline);
+            };
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("SetPoductionOrderStatus")", reqData, callback);
+            return false;
+        });
+</script>

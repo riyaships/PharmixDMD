@@ -1,0 +1,53 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Patient Dashboard";
+}
+
+<div class="form-horizontal">
+    <div class="">
+        <h2>User</h2>
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-sm-6">
+                @Html.DisplayFor(m => m)
+            </div>
+            <a class="btn btn-danger pull-right" asp-action="Create">Create New</a>
+        </div>
+    </div>
+    <div id="divPatientGrid"></div>
+</div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#divPatientGrid").on("click", "table tbody a", function () {
+            var id = $(this).closest("tr").data("id");
+            var $iconAction = $(this).find(".fa");
+
+            if ($iconAction.hasClass("fa-file-text")) {
+                window.location.href = '/Patient/Detail?PatientId=' + id
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+        $("#SearchText").on("input", function () {
+            $("#linkSearch").trigger("click");
+        });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divPatientGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("Search")", { Page: 1, SearchText: searchText }, callback);
+            return false;
+        });
+
+        setTimeout(function () {
+            $("#linkSearch").trigger("click");
+        }, 200);
+    });
+    
+</script>

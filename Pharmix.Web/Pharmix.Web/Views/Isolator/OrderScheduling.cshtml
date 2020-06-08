@@ -1,0 +1,122 @@
+﻿@model Pharmix.Web.Entities.ViewModels.IntegrationOrder.IntegrationOderScheduleViewModel
+@{
+    ViewBag.Title = "Order Scheduling Dashboard";
+    var prepDateString = Model.PreperationDate.ToString("yyyy-MM-dd");
+}
+
+@{
+<h3>
+    <span class="chosen-title-container">@Html.DropDownListFor(m => m.IsolatorId, Model.IsolatorList)</span> - Integration Order Scheduling &nbsp;
+    <sub>
+        <span class="text-info font-light"><i class="fa fa-info-circle"></i>&nbsp; Drag and drop the order on the isolator shift to schedule order preperation</span>
+    </sub>
+    <a asp-action="OrderSchedulingIndex" asp-route-defaultDate="@prepDateString" class="btn btn-danger pull-right"><i class="fa fa-chevron-circle-left"></i>&nbsp;&nbsp;Back</a>
+</h3>
+
+    <hr />
+    <div class="form-horizontal col-sm-3" id="divOrderSection">
+        <input id="hdnDraggedOrderId" value="0" type="hidden" />
+        <input id="hdnDraggedOrderReqTime" value="0" type="hidden" />
+        <div class="form-group">
+            @Html.DisplayFor(m => m.OrderSearch)
+        </div>
+        <div id="divOrderGrid"></div>
+    </div>
+    <div class="col-sm-9">
+        <section>
+            <div class="appointments">
+                <div class="scheduler-header">
+                    <a title="Move to previous month" class="btn btn-default pull-left" id="linkPrevMonth" href="javascript:void(0)">
+                        <i class="fa fa-chevron-left"></i>
+                    </a>
+                    <span id="spnAppointmentTitle" class="h4" data-date="@DateTime.Now.ToString("yyyy-MM-01")">@DateTime.Now.ToString("MMMM, yyyy")</span>
+                    <a title="Move to next month" class="btn btn-default pull-right" id="linkNextMonth" href="javascript:void(0)">
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <a class="btn btn-default pull-right today" id="linkToday" href="javascript:void(0)">
+                        Today
+                    </a>
+                    <div class="reset-div>"></div>
+                </div>
+                <div id="orderScheduler"></div>
+            </div>
+        </section>
+    </div>
+}
+@section Styles{
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/scheduler/css/escScheduler.css")" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+}
+
+<script type="text/javascript" src="@Url.Content("~/scheduler/js/escScheduler.js")"></script>
+<script>
+    $(document).ready(function () {
+        $("#IsolatorId").chosen().on("change", function () {
+            window.location.href = "/isolator/OrderScheduling?isoid="+ $(this).val() +"&dt=@prepDateString";
+        });
+
+        $("#divOrderGrid").on("drag", ".small-box", function (ev) {
+            $("#hdnDraggedOrderId").val($(ev.target).data("entityid"));
+            $("#hdnDraggedOrderReqTime").val($(ev.target).data("reqtime"));
+        });
+
+        $("#divOrderGrid").on("mouseenter", ".small-box", function (ev) {
+            $(this).find(".small-box-footer").slideDown();
+        }).on("mouseleave", ".small-box", function (ev) {
+            $(this).find(".small-box-footer").slideUp();
+        });
+
+        $("#OrderSearch_SearchText").on("input",
+            function() {
+                $("#divOrderSection #linkSearch").trigger("click");
+            });
+
+        $("#divOrderSection #linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divOrderGrid").html(response);
+            };
+
+            var searchText = $("#OrderSearch_SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("OrderSearch")", { Page: 1, SearchText: searchText }, callback, null, 200);
+            return false;
+        });
+
+        $(document).ready(function() {
+            $("#divOrderSection #linkSearch").trigger("click");
+        });
+
+        Framework.Utility.WheelerJsUrl = '@(Url.Content("~/scheduler/js/jquery.mousewheel.min.js"))';
+
+        Framework.Utility.InitializeEscScheduler("orderScheduler", $("#IsolatorId").val(), "@(Model.PreperationDate.ToString("yyyy-MM-01"))",
+            "@DateTime.DaysInMonth(Model.PreperationDate.Year, Model.PreperationDate.Month)", '@Url.Content("~/scheduler/scheduler.json")', "/isolator/PreperationOrderTimeline", "/isolator/PreperationOrderTimeline", null, true, "@prepDateString");
+
+        $("#linkPrevMonth,#linkNextMonth,#linkToday").click(function () {
+            var objDate = new Date($("#spnAppointmentTitle").data("date"));
+
+            var linkId = $(this).attr("id");
+            var i = 0;
+            switch (linkId) {
+            case "linkPrevMonth":
+                i = -1;
+                break;
+            case "linkNextMonth":
+                i = 1;
+                break;
+            case "linkToday":
+                objDate = new Date();
+                break;
+            }
+            objDate.setDate(01);
+            objDate.setMonth(objDate.getMonth() + i);
+
+            var formatedDate = objDate.getFullYear() + "-" + Framework.Utility.FormatToTwoDigitValue(objDate.getMonth() + 1) + "-" + Framework.Utility.FormatToTwoDigitValue(objDate.getDate());
+            var daysInMonth = new Date(objDate.getFullYear(), objDate.getMonth() + 1, 0).getDate();
+
+            var monthText = objDate.toLocaleString("en-us", { month: "long" });
+            $("#spnAppointmentTitle").data("date", formatedDate).text(monthText + ", " + objDate.getFullYear());
+
+            Framework.Utility.InitializeEscScheduler("orderScheduler", $("#IsolatorId").val(), formatedDate, daysInMonth, '@Url.Content("~/scheduler/scheduler.json")', "/isolator/PreperationOrderTimeline", "/isolator/PreperationOrderTimeline", null, true);
+        });
+    });
+</script>

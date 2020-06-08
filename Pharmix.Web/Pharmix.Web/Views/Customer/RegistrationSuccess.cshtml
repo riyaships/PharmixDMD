@@ -1,0 +1,18 @@
+﻿<div class="text-center">
+    @if (ViewBag.IsSuccess)
+    {
+        <h1 class="text-navy font-bold">Your registration request successfully completed !</h1>
+        <h4>You will be notified to your registered e-mail address once your registration request has been approved</h4>
+    }
+    else
+    {
+        <h1 class="text-danger font-bold">Your registration request failed. Please contact administrator.</h1>
+    }
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div>Click here to <a class="font-bold" href="@Url.Action("Index", "Home")">login</a>
+    </div>
+</div>

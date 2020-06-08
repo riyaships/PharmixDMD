@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Pharmix.Web.Entities.PackagePlan>
+
+@{
+    ViewData["Title"] = "Buy Subscription";
+}
+<link href="~/css/pricing-table.css" rel="stylesheet" />
+
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Buy Subscription</h2>
+        </div>
+    </div>
+    <div id="divGrid" class="pricing-view clearfix">
+        @{
+            string[] str = { "bg-blue", "bg-green", "bg-orange", "bg-purple" };
+            int counter = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="pricing-box">
+                    <h3 class="bg-black pricing-title">@item.PackageName</h3>
+                    <div class="@str[counter] pricing-specs">
+                        <span><sup>$</sup>@item.Price</span>
+                        <i>@item.Duration</i>
+                    </div>
+                    <div class="pricing-desc">
+                        @item.Details
+                    </div>
+                    <div class="pad25A">
+                        <button type="button" data-id="@item.Id" class="btnSubscribe btn btn-lg btn-danger">Subscribe Now!</button>
+                    </div>
+                </div>
+            </div>
+            counter++;
+        }
+    </div>
+</div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script>
+    (function ($) {
+        $(".btnSubscribe").click(function () {
+            window.location.href = "/Payment/Index/" + $(this).data("id");
+        });
+    })(jQuery)
+</script>

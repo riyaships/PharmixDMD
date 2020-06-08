@@ -1,0 +1,106 @@
+﻿@model Pharmix.Data.Entities.ViewModels.RoleViewModel
+@{
+    ViewData["Title"] = "Manage Permission";
+}
+
+<section class="content-header">
+    <h3>
+        Manage Permission
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Access Permission</li>
+    </ol>
+</section>
+<section class="content">
+    @if (Model != null && Model.GroupViewModelList != null && Model.GroupViewModelList.Count() > 0)
+    {
+        @using (Html.BeginForm("ManagePermission", "User", FormMethod.Post, new { @class = "form-inline frmManagePermission" }))
+        {
+            <input asp-for="Id" value="@Model.Id" type="hidden" />
+
+
+
+            for (int g = 0; g < Model.GroupViewModelList.Count; g++)
+            {
+                @:<div class="groupContainer">
+                    <div class="row">
+                        @Html.HiddenFor(m => m.GroupViewModelList[g].Id)
+                        @Html.HiddenFor(m => m.GroupViewModelList[g].Name)
+                        <label>@Html.CheckBoxFor(m => m.GroupViewModelList[g].IsSelected, new { @class = "chkGrpParent" }) @Model.GroupViewModelList[g].Name</label>
+                    </div>
+
+                    @if (Model.GroupViewModelList[g].PermissionViewModelList != null && Model.GroupViewModelList[g].PermissionViewModelList.Count > 0)
+                    {
+                        <div class="row col-md-11 col-lg-offset-1">
+                            @for (int p = 0; p < Model.GroupViewModelList[g].PermissionViewModelList.Count; p++)
+                            {
+                                @Html.HiddenFor(m => m.GroupViewModelList[g].PermissionViewModelList[p].Id)
+                                <label class="checkbox-inline" style="margin:5px;">@Html.CheckBoxFor(m => m.GroupViewModelList[g].PermissionViewModelList[p].IsSelected, new { @class = "chkGrpChld" }) @Model.GroupViewModelList[g].PermissionViewModelList[p].Name</label>
+                            }
+                        </div>
+                    }
+                @:</div>
+            }
+            <button type="submit" class="btn btn-default" id="btnSave">Save</button>
+        }
+
+
+
+        @*<table class="table table-condensed table-hover table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>IsHaveAccess</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    @if (Model != null && Model.RolePermissionViewModelList != null && Model.RolePermissionViewModelList.Count() > 0)
+                    {
+                        for (int i = 0; i < Model.RolePermissionViewModelList.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model.RolePermissionViewModelList[i].PermissionName</td>
+                                <td>
+                                    @Html.HiddenFor(m => m.RolePermissionViewModelList[i].PermissionId)
+                                    @Html.CheckBoxFor(m => m.RolePermissionViewModelList[i].IsHaveAccess)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>*@
+
+    }
+    else
+    {
+        <div class="no-result text-center text-danger">
+            <i class="fa fa-frown-o fa-2x" aria-hidden="true"></i>
+            <h4>No data found..</h4>
+        </div>
+    }
+</section>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.chkGrpParent').on('change', function () {
+                if ($(this).prop('checked'))
+                    $(this).parents('.groupContainer').find('input[type=checkbox]').prop('checked', true);
+                else
+                    $(this).parents('.groupContainer').find('input[type=checkbox]').prop('checked', false);
+            });
+
+            $('.chkGrpChld').on('change', function () {
+                if (!$(this).prop('checked'))
+                    $(this).parents('.groupContainer').find('.chkGrpParent').prop('false', true);
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,108 @@
+﻿@model SearchViewModel
+
+@{
+    ViewBag.Title = "Isolator Procedure Dashboard";
+    Layout = "_Layout";
+}
+
+<div class="form-horizontal">
+    <div class="">
+        <h2>Isolator Procedure Dashboard</h2>
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-xs-6 col-sm-4">
+                @Html.DisplayFor(m => m)
+            </div>
+            <button type="button" class="btn btn-danger pull-right small-box" id="btnCreateProc">Create New</button>
+        </div>
+    </div>
+    <div id="divProcGrid">
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $("#SearchText").on("input",
+            function() {
+                $("#linkSearch").trigger("click");
+            });
+
+        var initializeFormEvents = function () {
+            $("#ProcedureTypeId").attr("data-placeholder", "- Select procedure type -").chosen({ width:"100%" });
+
+            $("#btnSaveProc").click(function () {
+                var callbackSave = function (response) {
+                    if (response) {
+                        $("#linkSearch").trigger("click");
+                        $("#formProc").closest(".modal").modal("hide");
+                        toastr.success("Isolator procedure has been saved successfully.");
+                        return;
+                    }
+                    toastr.error("Isolator procedure save has failed.");
+                };
+
+                var request = $("#formProc").serialize();
+
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveProcedure", "Lookup")", request, callbackSave);
+                return false;
+            });
+        }
+
+        var showPopup = function(id) {
+            var callback = function (response) {
+                Framework.Popup.CreateInfoPopup(id > 0 ? "Edit Isolator Procedure" : "Create Isolator Procedure", response, null, null, null, true, initializeFormEvents);
+            };
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetProcedure", "Lookup")", { Id: id }, callback);
+        }
+
+        var performDeletion = function (id) {
+            var deleteProc = function () {
+                var callback = function (response) {
+                    if (response.IsSuccess) {
+                        $("#linkSearch").trigger("click");
+                        toastr.success("Isolator procedure has been deleted successfully.");
+                        return;
+                    }
+                    toastr.error(response.Message);
+                };
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("DeleteProcedure", "Lookup")", { Id: id }, callback);
+            }
+
+            Framework.Popup.CreateConfirmationPopup("Confrim Deletion", "Are you sure want to delete this item?", deleteProc);
+        }
+
+        $("#btnCreateProc").click(function () {
+            showPopup(0);
+            return false;
+        });
+
+        $("#divProcGrid").on("click", ".table a", function () {
+            var id = $(this).closest("tr").data("id");
+            var $iconAction = $(this).find(".fa");
+
+            if ($iconAction.hasClass("fa-edit")) {
+                showPopup(id);
+            } else if ($iconAction.hasClass("fa-trash")) {
+                performDeletion(id);
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divProcGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("SearchProcedure", "Lookup")", { Page: 1, SearchText: searchText }, callback, null, 200);
+            return false;
+        });
+
+        setTimeout(function() {
+            $("#linkSearch").trigger("click");
+        }, 200);
+    })(jQuery)
+</script>
+

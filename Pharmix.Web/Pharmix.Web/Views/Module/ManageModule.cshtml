@@ -1,0 +1,47 @@
+﻿@model Pharmix.Web.Entities.ViewModels.TrustViewModel
+@{
+    ViewBag.Title = "Manage Module";
+}
+
+<hr class="">
+<div class="col-sm-12">
+    @using (Html.BeginForm("ManageModule", "Module", FormMethod.Post, new { @class = "form-horizontal frmManageModule" }))
+    {
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label col-sm-2 ">Trust</label>
+            <div class="col-sm-3">
+                <input asp-for="Name" class="form-control" disabled>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2 ">Modules</label>
+            <div class="col-sm-4">
+                @if (Model.TrustModuleViewModelList != null && Model.TrustModuleViewModelList.Count > 0)
+                {
+                    for (int i = 0; i < Model.TrustModuleViewModelList.Count; i++)
+                    {
+                        @Html.HiddenFor(m => m.TrustModuleViewModelList[i].ModuleId)
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.TrustModuleViewModelList[i].IsHaveAccess)
+                                @Model.TrustModuleViewModelList[i].ModuleName
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2  "></label>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-default" id="btnSave">Save</button>
+            </div>
+        </div>
+
+        <br /><br />
+
+    }
+</div>

@@ -1,0 +1,251 @@
+﻿@{
+    ViewData["Title"] = "Welcome To ";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div id="intro" class="intro_section page_mainslider ds color wow fadeInUp">
+    <div class="flexslider" data-dots="true" data-nav="false">
+        <ul class="slides">
+            <li>
+                <img src="/NewContent/images/main-slider/slide04.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="slide_description_wrapper">
+                                <div class="slide_description">
+                                    <div class="intro-layer with_corner_border with_padding huge-padding" data-animation="slideExpandUp">
+                                        <h5 class="thin"> We are focused on </h5>
+                                        <h2 class="highlight"> Developing Innovative IT Solutions</h2>
+                                        <p> Our mission is to build a futuristic solutions for hospitals <br> and assist other healthcare companies to <br>save time and costs with customised solutions. </p>
+                                        <span class="bottom_corners"></span>
+                                    </div>
+                                </div>
+                                <!-- eof .slide_description -->
+                            </div>
+                            <!-- eof .slide_description_wrapper -->
+                        </div>
+                        <!-- eof .col-* -->
+                    </div>
+                    <!-- eof .row -->
+                </div>
+                <!-- eof .container -->
+            </li>
+            <li>
+                <img src="/NewContent/images/main-slider/slide02.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="slide_description_wrapper">
+                                <div class="slide_description">
+                                    <div class="intro-layer with_corner_border with_padding huge-padding" data-animation="slideExpandUp">
+                                        <h5 class="thin"> We will Help You With</h5>
+                                        <h2 class="highlight">Well managed Booking System</h2>
+                                        <p> Help your patients and customers beat the queues to book appointments well in advance</p>
+                                        <span class="bottom_corners"></span>
+                                    </div>
+                                </div>
+                                <!-- eof .slide_description -->
+                            </div>
+                            <!-- eof .slide_description_wrapper -->
+                        </div>
+                        <!-- eof .col-* -->
+                    </div>
+                    <!-- eof .row -->
+                </div>
+                <!-- eof .container -->
+            </li>
+            <li>
+                <img src="/NewContent/images/main-slider/slide01.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="slide_description_wrapper">
+                                <div class="slide_description">
+                                    <div class="intro-layer with_corner_border with_padding huge-padding" data-animation="slideExpandUp">
+                                        <h5 class="thin"> We are dedicated to </h5>
+                                        <h2 class="highlight"> Discovery, Development &amp;<br> Commercialization </h2>
+                                        <p> of new innovative products and focus on reducing the errors and cost of care on treatments</p>
+                                        <span class="bottom_corners"></span>
+                                    </div>
+                                </div>
+                                <!-- eof .slide_description -->
+                            </div>
+                            <!-- eof .slide_description_wrapper -->
+                        </div>
+                        <!-- eof .col-* -->
+                    </div>
+                    <!-- eof .row -->
+                </div>
+                <!-- eof .container -->
+            </li>
+        </ul>
+    </div>
+    <!-- eof flexslider -->
+</div>
+@{
+    Html.RenderPartial("_OverviewView");
+    Html.RenderPartial("_FeaturesView");
+    Html.RenderPartial("_ServicesView");
+}
+
+<div class="section-full bg-img-fix content-inner overlay-primary-dark text-white wow fadeInUp text-center" style="background-image:url(/NewContent/images/background/features.jpg);">
+    <div class="container text-center">
+        <h1 class="m-t0">Lorem ipsum dolor sit amet?</h1>
+        <p>Lorem ipsum dolor sit amet, cons ectetur elit. Vestibulum nec odios Suspe ndisse cursus. cons ectetur elit. </p>
+        <a href="Home/SubscribeNow" class="site-button white radius-xl m-r15">Buy Subscription</a>
+    </div>
+</div>
+@{
+    Html.RenderPartial("_FAQView");
+    Html.RenderPartial("_ContactView");
+}
+<script>
+    $(function () {
+        $(".navbar-nav li a").each(function () {
+            $(this).attr("href", $(this).attr("href").replace('/Home', ''));
+        });
+
+        // Cache selectors
+        var topMenu = $(".nav.navbar-nav"),
+            topMenuHeight = topMenu.outerHeight()+15,
+            // All list items
+            menuItems = topMenu.find("a"),
+            // Anchors corresponding to menu items
+            scrollItems = menuItems.map(function(){
+              var item = $($(this).attr("href"));
+              if (item.length) { return item; }
+            });
+
+        // Bind to scroll
+        $(window).scroll(function(){
+           // Get container scroll position
+           var fromTop = $(this).scrollTop() + topMenuHeight;
+
+           // Get id of current scroll item
+           var cur = scrollItems.map(function(){
+             if ($(this).offset().top < fromTop)
+               return this;
+           });
+           // Get the id of the current element
+           cur = cur[cur.length-1];
+           var id = cur && cur.length ? cur[0].id : "";
+           // Set/remove active class
+           menuItems.parent().removeClass("active").end().filter("[href='#"+id+"']").parent().addClass("active");
+        });
+
+        // Smooth scroll for the menu and links with .scrollto classes
+        $('.header-nav a').on('click', function () {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                if (target.length) {
+                    var top_space = 0;
+
+                    if ($('#header').length) {
+                        top_space = $('#header').outerHeight();
+
+                        if (!$('#header').hasClass('is-fixed')) {
+                            top_space = $('#header .main-bar').outerHeight();
+                        }
+                    }
+
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - top_space - 30
+                    }, 1500, 'easeInOutExpo');
+
+                    if ($(this).parents('li').length) {
+                        $('.active').removeClass('active');
+                        $(this).closest('li').addClass('active');
+                    }
+                    return false;
+                }
+            }
+        });
+
+        if (jQuery().flexslider) {
+            var $introSlider = jQuery(".intro_section .flexslider");
+            $introSlider.each(function (index) {
+                var $currentSlider = jQuery(this);
+                var data = $currentSlider.data();
+                var nav = (data.nav !== 'undefined') ? data.nav : true;
+                var dots = (data.dots !== 'undefined') ? data.dots : true;
+
+                $currentSlider.flexslider({
+                    animation: "fade",
+                    pauseOnHover: true,
+                    useCSS: true,
+                    controlNav: dots,
+                    directionNav: nav,
+                    prevText: "",
+                    nextText: "",
+                    smoothHeight: false,
+                    slideshowSpeed: 10000,
+                    animationSpeed: 600,
+                    start: function (slider) {
+                        slider.find('.flex-active-slide .slide_description').children().each(function (index) {
+                            var self = jQuery(this);
+                            var animationClass = !self.data('animation') ? 'fadeInRight' : self.data('animation');
+                            setTimeout(function () {
+                                self.addClass("animated " + animationClass);
+                            }, index * 200);
+                        });
+                        slider.find('.flex-control-nav').find('a').each(function () {
+                            jQuery(this).html('0' + jQuery(this).html());
+                        })
+                    },
+                    after: function (slider) {
+                        slider.find('.flex-active-slide .slide_description').children().each(function (index) {
+                            var self = jQuery(this);
+                            var animationClass = !self.data('animation') ? 'fadeInRight' : self.data('animation');
+                            setTimeout(function () {
+                                self.addClass("animated " + animationClass);
+                            }, index * 200);
+                        });
+                    },
+                    end: function (slider) {
+                        slider.find('.slide_description').children().each(function () {
+                            var self = jQuery(this);
+                            var animationClass = !self.data('animation') ? 'fadeInRight' : self.data('animation');
+                            self.removeClass('animated ' + animationClass);
+                            // jQuery(this).attr('class', '');
+                        });
+                    },
+
+                })
+                    //wrapping nav with container - uncomment if need
+                    .find('.flex-control-nav')
+                    .wrap('<div class="container-fluid nav-container"/>')
+            });
+
+            jQuery(".flexslider").each(function (index) {
+                var $currentSlider = jQuery(this);
+                //exit if intro slider already activated
+                if ($currentSlider.find('.flex-active-slide').length) {
+                    return;
+                }
+
+                var data = $currentSlider.data();
+                var nav = (data.nav !== 'undefined') ? data.nav : true;
+                var dots = (data.dots !== 'undefined') ? data.dots : true;
+                var autoplay = (data.autoplay !== 'undefined') ? data.autoplay : true;
+                $currentSlider.flexslider({
+                    animation: "slide",
+                    useCSS: true,
+                    controlNav: dots,
+                    directionNav: nav,
+                    prevText: "",
+                    nextText: "",
+                    smoothHeight: false,
+                    slideshow: autoplay,
+                    slideshowSpeed: 5000,
+                    animationSpeed: 400,
+                    start: function (slider) {
+                        slider.find('.flex-control-nav').find('a').each(function () {
+                            jQuery(this).html('0' + jQuery(this).html());
+                        })
+                    },
+                })
+                    .find('.flex-control-nav')
+                    .wrap('<div class="container-fluid nav-container"/>')
+            });
+        }
+    });
+</script>

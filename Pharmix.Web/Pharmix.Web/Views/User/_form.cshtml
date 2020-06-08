@@ -1,0 +1,78 @@
+﻿@model Pharmix.Data.Entities.ViewModels.UserViewModel
+
+@inject Pharmix.Web.Services.IUserService userService
+@{
+    ViewData["Title"] = "_form";
+    bool isPharmixAdmin = userService.IsPharmixAdmin(User.Identity.Name);
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<div class="col-sm-12">
+    <form id="formUser">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Role)
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            @if (Model.TempId <= 0)
+            {
+                <input asp-for="Email" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="Email" class="form-control" disabled />
+                @Html.HiddenFor(m => m.Email)
+            }
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Surname" class="control-label"></label>
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MobileNumber" class="control-label"></label>
+            <input asp-for="MobileNumber" class="form-control" />
+            <span asp-validation-for="MobileNumber" class="text-danger"></span>
+        </div>
+        @if (isPharmixAdmin)
+        {
+            <div class="form-group">
+                <label asp-for="TrustId" class="control-label">Trust</label>
+                <select asp-for="TrustId" asp-items="(SelectList)ViewBag.Trusts" class="form-control">
+                    <option> Select</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+        }
+        else
+        {
+            @Html.HiddenFor(m => m.TrustId)
+        }
+        <div class="clearfix"></div>
+        <hr />
+        <div class="form-group text-center">
+            <button type="button" id="btnSaveUser" class="btn btn-success">Save</button>
+            <button type="button" id="btnCancelUser" data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+</div>
+
+

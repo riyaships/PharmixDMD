@@ -1,0 +1,111 @@
+﻿@model SearchViewModel
+
+@{
+    ViewBag.Title = "VTM Dashboard";
+    Layout = "_Layout";
+}
+
+<div class="form-horizontal">
+    <div class="">
+        <h2>VTM Dashboard</h2>
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-xs-6 col-sm-4">
+                @Html.DisplayFor(m => m)
+            </div>
+            <button type="button" class="btn btn-danger pull-right small-box" id="btnCreateVtm">Create New</button>
+        </div>
+
+    </div>
+    <div id="divVtmGrid">
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $("#SearchText").on("input",
+            function() {
+                $("#linkSearch").trigger("click");
+            });
+
+        var initializeFormEvents = function () {
+            $("#btnCancelVtmCreate").click(function () {
+                $("#formVtmCreate").closest(".modal").modal("hide");
+            });
+
+            $("#btnVtmCreate").click(function () {
+                var callbackSave = function (response) {
+                    if (response != null) {
+                        toastr.success("VTM has been saved successfully.");
+                        $("#linkSearch").trigger("click");
+                        $("#formVtmCreate").closest(".modal").modal("hide");
+                        return;
+                    }
+                    toastr.error("VTM save has failed.");
+                };
+
+                var request = $("#formVtmCreate").serialize();
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("SaveVtm")", request, callbackSave);
+                return false;
+            });
+        }
+
+        var showPopup = function(id) {
+            var callback = function (response) {
+                Framework.Popup.CreateInfoPopup(id > 0 ? "Edit VTM" : "Create VTM", $("<div class='col-sm-12'></div>").append(response), null, null, null, true, initializeFormEvents);
+            };
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetVtmForm", "UsedProduct")", { Id: id }, callback);
+        }
+
+        var performDeletion = function (id) {
+            var deleteVtm = function () {
+                var callback = function (response) {
+                    if (response.IsSuccess) {
+                        $("#linkSearch").trigger("click");
+                        toastr.success(response.Message);
+                        return;
+                    }
+                    toastr.error(response.Message);
+                };
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("DeleteVtm", "UsedProduct")", { Id: id }, callback);
+            }
+
+            Framework.Popup.CreateConfirmationPopup("Confrim Deletion", "Are you sure want to delete this item?", deleteVtm);
+        }
+
+        $("#btnCreateVtm").click(function () {
+            showPopup(0);
+            return false;
+        });
+
+        $("#divVtmGrid").on("click", ".table a", function () {
+            var id = $(this).closest("tr").data("id");
+            var $iconAction = $(this).find(".fa");
+
+            if ($iconAction.hasClass("fa-edit")) {
+                showPopup(id);
+            } else if ($iconAction.hasClass("fa-trash")) {
+                performDeletion(id);
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divVtmGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("SearchVtm", "UsedProduct")", { Page: 1, SearchText: searchText }, callback, null, 200);
+            return false;
+        });
+
+        setTimeout(function() {
+            $("#linkSearch").trigger("click");
+        }, 200);
+    })(jQuery)
+</script>
+
+

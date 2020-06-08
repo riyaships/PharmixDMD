@@ -1,0 +1,45 @@
+﻿
+<div class="row">
+    <div class="col-sm-4">
+        <a asp-action="Index" asp-controller="User" class="card" title="Click to enter">
+            <span class="fa fa-users fa-3x text-primary"></span>&nbsp;
+            Manage trust users
+            <div class="card-body">
+                <h4><b>Trust users</b></h4>
+                <p>Trust user create, update, remove, and assign roles</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="card" asp-action="Roles" asp-controller="User" title="Click to enter">
+            <span class="fa fa-user-secret fa-3x"></span>&nbsp;
+            Manage user roles
+            <div class="card-body">
+                <h4><b>User roles</b></h4>
+                <p>User roles create, update, remove and manage role permissions</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="card" asp-action="Index" asp-controller="PermissionGroup" title="Click to enter">
+            <span class="fa fa-lock fa-3x text-danger"></span>&nbsp;
+            Manage permission groups
+            <div class="card-body">
+                <h4><b>Permission groups</b></h4>
+                <p>Create, update, remove permission groups</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <a class="card" asp-action="Index" asp-controller="IntegrationOrder" title="Click to enter">
+            <span class="fa fa-medkit fa-3x text-danger"></span>&nbsp;
+            Manage integration orders
+            <div class="card-body">
+                <h4><b>Integration Orders</b></h4>
+                <p>orders create, update, and remove</p>
+            </div>
+        </a>
+    </div>
+</div>

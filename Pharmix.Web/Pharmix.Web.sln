@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmix.Web", "Pharmix.Web\Pharmix.Web.csproj", "{FD5723C1-2B8D-4A57-93CE-8026E7CEB117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmixCommon", "PharmixCommon\PharmixCommon.csproj", "{73D31321-BEE6-432E-83AD-33C27BCEFEA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmixFTPJob", "PharmixFTPJob\PharmixFTPJob.csproj", "{F2DEF53B-6BC3-4589-9D58-BC6FD79287C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmixWebApi", "PharmixWebApi\PharmixWebApi.csproj", "{1BA74D07-F8FC-48AA-95D6-6C8B10400858}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmixJob", "PharmixJob\PharmixJob.csproj", "{27B2A573-A9E5-4F2E-BA04-35D9E34AF2E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayPalCore", "PayPalCore\PayPalCore.csproj", "{8A2D27E8-0943-4E05-BCD4-DDC6A8F788D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmixExportBulkDataJob", "PharmixExportBulkDataJob\PharmixExportBulkDataJob.csproj", "{486F5366-8D88-4423-A284-89874281C34B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD5723C1-2B8D-4A57-93CE-8026E7CEB117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5723C1-2B8D-4A57-93CE-8026E7CEB117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5723C1-2B8D-4A57-93CE-8026E7CEB117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5723C1-2B8D-4A57-93CE-8026E7CEB117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D31321-BEE6-432E-83AD-33C27BCEFEA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D31321-BEE6-432E-83AD-33C27BCEFEA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D31321-BEE6-432E-83AD-33C27BCEFEA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D31321-BEE6-432E-83AD-33C27BCEFEA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2DEF53B-6BC3-4589-9D58-BC6FD79287C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2DEF53B-6BC3-4589-9D58-BC6FD79287C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2DEF53B-6BC3-4589-9D58-BC6FD79287C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2DEF53B-6BC3-4589-9D58-BC6FD79287C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA74D07-F8FC-48AA-95D6-6C8B10400858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA74D07-F8FC-48AA-95D6-6C8B10400858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA74D07-F8FC-48AA-95D6-6C8B10400858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA74D07-F8FC-48AA-95D6-6C8B10400858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27B2A573-A9E5-4F2E-BA04-35D9E34AF2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B2A573-A9E5-4F2E-BA04-35D9E34AF2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27B2A573-A9E5-4F2E-BA04-35D9E34AF2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27B2A573-A9E5-4F2E-BA04-35D9E34AF2E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A2D27E8-0943-4E05-BCD4-DDC6A8F788D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A2D27E8-0943-4E05-BCD4-DDC6A8F788D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A2D27E8-0943-4E05-BCD4-DDC6A8F788D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A2D27E8-0943-4E05-BCD4-DDC6A8F788D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{486F5366-8D88-4423-A284-89874281C34B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486F5366-8D88-4423-A284-89874281C34B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486F5366-8D88-4423-A284-89874281C34B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486F5366-8D88-4423-A284-89874281C34B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80D95F90-85DC-4D19-A9FA-4403AEC50E24}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://pharmix.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Pharmix.Web\\Pharmix.Web.csproj
+		SccProjectName1 = Pharmix.Web
+		SccLocalPath1 = Pharmix.Web
+		SccProjectUniqueName2 = PharmixCommon\\PharmixCommon.csproj
+		SccProjectName2 = PharmixCommon
+		SccLocalPath2 = PharmixCommon
+		SccProjectUniqueName3 = PharmixFTPJob\\PharmixFTPJob.csproj
+		SccProjectName3 = PharmixFTPJob
+		SccLocalPath3 = PharmixFTPJob
+		SccProjectUniqueName4 = PharmixWebApi\\PharmixWebApi.csproj
+		SccProjectName4 = PharmixWebApi
+		SccLocalPath4 = PharmixWebApi
+		SccProjectUniqueName5 = PharmixJob\\PharmixJob.csproj
+		SccProjectName5 = PharmixJob
+		SccLocalPath5 = PharmixJob
+		SccProjectUniqueName6 = PayPalCore\\PayPalCore.csproj
+		SccProjectName6 = PayPalCore
+		SccLocalPath6 = PayPalCore
+		SccProjectUniqueName7 = PharmixExportBulkDataJob\\PharmixExportBulkDataJob.csproj
+		SccProjectName7 = PharmixExportBulkDataJob
+		SccLocalPath7 = PharmixExportBulkDataJob
+	EndGlobalSection
+EndGlobal

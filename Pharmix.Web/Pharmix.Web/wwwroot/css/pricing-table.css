@@ -1,0 +1,71 @@
+﻿.pricing-view {
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.pricing-box {
+    text-align: center;
+    position: relative;
+    border: 1px solid #d3d3d3;
+    background: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+    .pricing-box .pricing-specs, .pricing-box .pricing-title {
+        margin: -1px -1px 0
+    }
+
+    .pricing-box .pricing-title {
+        font-weight: 400;
+        padding: 15px
+    }
+
+    .pricing-box ul {
+        margin: 0;
+        padding: 0;
+        list-style: none
+    }
+
+    .pricing-box .pricing-specs {
+        padding: 10px 15px 20px
+    }
+
+        .pricing-box .pricing-specs span {
+            font-size: 50px
+        }
+
+            .pricing-box .pricing-specs span sup {
+                font-size: 30px;
+                margin-left: -20px;
+                padding-right: 5px
+            }
+
+        .pricing-box .pricing-specs i {
+            font-size: 14px;
+            font-style: normal;
+            display: block;
+            color: rgba(255,255,255,.6)
+        }
+
+    .pricing-box ul li {
+        font-size: 14px;
+        line-height: 48px;
+        height: 48px;
+        padding: 0 10px;
+        border-bottom: #d3d3d3 solid 1px
+    }
+
+        .pricing-box ul li:nth-child(even) {
+            background: #fafafa
+        }
+
+    .pricing-box .pricing-desc {
+        font-size: 14px;
+        min-height: 48px;
+        padding: 10px;
+        border-bottom: 1px solid #d3d3d3
+    }
+
+.pad25A {
+    padding: 25px !important;
+}

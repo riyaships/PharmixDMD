@@ -1,0 +1,117 @@
+﻿@model Pharmix.Data.Entities.ViewModels.Customer.CustomerViewModel
+@{
+    ViewBag.Title = "Customer Register";
+}
+
+@{
+    <hr class="no-margin">
+
+    <section>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-lg-10">
+                    <div class="grey-box form">
+                        <h1 class="margin-bottom-30">Register:</h1>
+
+                        @using (Html.BeginForm())
+                        { 
+                            <div class="form-group">
+                                <label class="control-label" for="EmailAddress">Email *</label>
+                                <input class="form-control" id="EmailAddress" name="EmailAddress" value="" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="Password">Password *</label>
+                                <input class="form-control" id="Password" name="Password" type="password">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="ConfirmPassword">Confirm Password</label>
+                                <input class="form-control" id="ConfirmPassword" name="ConfirmPassword" type="password">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="FirstName">First Name *</label>
+                                        <input class="form-control" id="FirstName" name="FirstName" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Surname">Surname *</label>
+                                        <input class="form-control" id="Surname" name="Surname" value="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="DateOfBirth">Date Of Birth</label>
+                                        <input class="form-control" data-val="true" data-val-date="The field DateOfBirth must be a date." id="DateOfBirth" name="DateOfBirth" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="GenderID">Gender *</label>
+                                        <select class="form-control" data-val="true" data-val-number="The field GenderID must be a number." data-val-required="The GenderID field is required." id="GenderID" name="GenderID">
+                                            <option value="">- Select Gender -</option>
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="MobileNumber">Mobile No.</label>
+                                        <input class="form-control" id="MobileNumber" name="MobileNumber" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="AlternativeTel">Telephone No.</label>
+                                        <input class="form-control" id="AlternativeTel" name="AlternativeTel" value="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="AddressLine1">Address Line 1</label>
+                                <textarea class="form-control" cols="20" id="AddressLine1" name="AddressLine1" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="AddressLine2">Address Line 2</label>
+                                <textarea class="form-control" cols="20" id="AddressLine2" name="AddressLine2" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="AddressLine3">Address Line 3</label>
+                                <textarea class="form-control" cols="20" id="AddressLine3" name="AddressLine3" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="City">City</label>
+                                <input class="form-control" id="City" name="City" value="" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="County">Country</label>
+                                <input class="form-control" id="County" name="County" value="" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="Postcode">Postcode</label>
+                                <input class="form-control" id="Postcode" name="Postcode" value="" type="text">
+                            </div>
+                            <div class="form-action register margin-top-30">
+                                <button type="submit">
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    Register
+                                </button>
+                                <button type="reset" class="reset-btn">
+                                    <i class="fa fa-close" aria-hidden="true"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                        @*</form>*@
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

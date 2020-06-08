@@ -1,0 +1,87 @@
+﻿@model List<Pharmix.Data.Entities.ViewModels.PermissionViewModel>
+@{
+    ViewData["Title"] = "Menu";
+}
+
+<ul class="sidebar-menu" data-widget="tree">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="treeview">
+            <a asp-action="Index" , asp-controller="Home">
+                <i class="fa fa-dashboard text-primary"></i>&nbsp;My Dashboard
+            </a>
+        </li>
+
+        @if (Model != null && Model.Count > 0)
+         {
+             foreach (var permission in Model.Where(x => x.ParentPermissionId == null || x.ParentPermissionId == 0))
+             {
+                 if (Model.Count(x => x.ParentPermissionId == permission.Id) > 0)
+                 {
+                     <li class="treeview menu-open">
+                         <a href="@permission.Url">
+                             <i class="fa @(permission.CssClass ?? "fa-dashboard")"></i>
+                             <span>@permission.Name </span>
+                             <span class="pull-right-container">
+                                 <i class="fa fa-angle-left pull-right"></i>
+                             </span>
+                         </a>
+                         <ul class="treeview-menu" style="display:block;">
+                             @foreach (var childPermission in Model.Where(x => x.ParentPermissionId == permission.Id))
+                             {
+                                 <li><a href="@childPermission.Url"><i class="fa @(childPermission.CssClass ?? "fa-dashboard")"></i> <span>@childPermission.Name</span></a></li>
+                             }
+                         </ul>
+                     </li>
+
+                 }
+                 else
+                 {
+                     <li class="treeview menu-open"><a href="@permission.Url"><i class="fa fa-dashboard"></i> <span>@permission.Name</span></a></li>
+                 }
+             }
+         }
+    }
+    else
+    {
+        <li></li>
+    }
+
+</ul>
+
+
+@*<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">MAIN NAVIGATION</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+    <li class="treeview">
+        <a asp-controller="Production" asp-action="Index">
+            <i class="fa fa-laptop"></i> <span>Production</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a asp-controller="Production" asp-action="Index"><i class="fa fa-circle-o"></i> <span>Production 1</span></a></li>
+        </ul>
+    </li>
+    <li><a asp-controller="Production" asp-action="SupervisorRequestTracking"><i class="fa fa-laptop"></i> <span>Request</span></a></li>
+    <li><a asp-controller="Isolators" asp-action="Index"><i class="fa fa-object-group"></i> <span>Isolator</span></a></li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>Isolators</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> Devices</a></li>
+        </ul>
+    </li>*@
+    @*<li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        @*<li class="header">LABELS</li>
+                <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+            </ul>
+    *@

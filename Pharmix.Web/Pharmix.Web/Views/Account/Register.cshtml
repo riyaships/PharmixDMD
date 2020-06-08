@@ -1,0 +1,125 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="col-sm-offset-3">
+    <div class="col-md-8">
+        <h2>@ViewData["Title"]&nbsp;<sub class="small">Create a new account.</sub></h2>
+        
+        <hr />
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" autocomplete="off">
+            
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Surname" class="control-label"></label>
+                        <input asp-for="Surname" class="form-control" />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="GenderId" class="control-label"></label>
+                        <select asp-for="GenderId" class="form-control" data-val="true" data-val-number="The field GenderID must be a number." data-val-required="The Gender field is required.">
+                            <option value="">- Select Gender -</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                        </select>
+                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth" class="control-label"></label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="MobileNumber" class="control-label"></label>
+                        <input asp-for="MobileNumber" class="form-control" />
+                        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="AlternativeTel" class="control-label"></label>
+                        <input asp-for="AlternativeTel" class="form-control" />
+                        <span asp-validation-for="AlternativeTel" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <label asp-for="AddressLine1" class="control-label"></label>
+                <textarea asp-for="AddressLine1" class="form-control"></textarea>
+                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLine2" class="control-label"></label>
+                <textarea asp-for="AddressLine2" class="form-control"></textarea>
+                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="County" class="control-label"></label>
+                <input asp-for="County" class="form-control" />
+                <span asp-validation-for="County" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Postcode" class="control-label"></label>
+                <input asp-for="Postcode" class="form-control" />
+                <span asp-validation-for="Postcode" class="text-danger"></span>
+            </div>*@
+            
+            <hr/>
+            <div class="form-action register margin-top-30 form-group">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i> Register</button>
+                <button type="reset" class="reset-btn btn btn-danger"><i class="fa fa-close" aria-hidden="true"></i> Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

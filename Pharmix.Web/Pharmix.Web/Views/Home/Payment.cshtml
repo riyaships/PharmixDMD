@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Pay Now";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="dez-bnr-inr overlay-black-middle" style="background-image:url(/NewContent/images/main-slider/slide01.jpg);">
+    <div class="container">
+        <div class="dez-bnr-inr-entry">
+            <h1 class="text-white">Pay Now For Subscription</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="login-form">
+        <div class="tab-content">
+            <div id="login" class="tab-pane active text-center m-t100 m-b100">
+                <div id="paypal-button"></div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    var CREATE_PAYMENT_URL = '@ViewBag.URL_CreatePayment';
+    var EXECUTE_PAYMENT_URL = '@ViewBag.URL_ExecutePayment';
+
+    paypal.Button.render({
+        env: 'sandbox', //'production',
+        commit: true, // Show a 'Pay Now' button
+
+        payment: function () {
+            return paypal.request.post(CREATE_PAYMENT_URL).then(function (data) {
+                return data.id;
+            });
+        },
+
+        onAuthorize: function (data) {
+            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                paymentID: data.paymentID,
+                payerID: data.payerID
+            }).then(function () {
+                window.location.href = '@ViewBag.URL_Success'
+            });
+        }
+
+    }, '#paypal-button');
+</script>

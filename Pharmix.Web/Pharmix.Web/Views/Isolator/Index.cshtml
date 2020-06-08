@@ -1,0 +1,116 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Isolator Dashboard";
+}
+
+<div class="form-horizontal">
+    <div class="">
+        <h2>Isolator Dashboard</h2>
+        <div class="form-group panel panel-default panel-body">
+            <div class="row col-sm-4 col-xs-6">
+                @Html.DisplayFor(m => m)
+            </div>
+            <button type="button" class="btn btn-danger pull-right" id="btnCreateIsolator">Create New</button>
+        </div>
+        
+    </div>
+    <div id="divIsolatorGrid"></div>
+</div>
+
+<script>
+    (function ($) {
+        $("#SearchText").on("input",
+            function() {
+                $("#linkSearch").trigger("click");
+            });
+
+        var initializeFormEvents = function() {
+            $("#btnSaveIso").click(function () {
+                var callbackSave = function (response) {
+                    if (response) {
+                        $("#linkSearch").trigger("click");
+                        $("#formIsolator").closest(".modal").modal("hide");
+                        toastr.success("Isolator has been saved successfully.");
+                        return;
+                    }
+                    toastr.error("Isolator save has failed.");
+                };
+
+                var request = $("#formIsolator").serialize();
+
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("Save")", request, callbackSave);
+                return false;
+            });
+        }
+
+        var showPopup = function(id) {
+            var callback = function (response) {
+                Framework.Popup.CreateInfoPopup(id > 0 ? "Edit Isolator" : "Create Isolator", response, null, null, null, true, initializeFormEvents);
+            };
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("Get")", { Id: id }, callback);
+        }
+
+        var performDeletion = function (id) {
+            var deleteProduct = function () {
+                var callback = function (response) {
+                    if (response) {
+                        $("#linkSearch").trigger("click");
+                        toastr.success("Isolator has been deleted successfully.");
+                        return;
+                    }
+                    toastr.error("Isolator deletion has failed.");
+                };
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("Delete")", { Id: id }, callback);
+            }
+
+            Framework.Popup.CreateConfirmationPopup("Confrim Deletion", "Are you sure want to delete this item?", deleteProduct);
+        }
+
+        $("#btnCreateIsolator").click(function () {
+            showPopup(0);
+            return false;
+        });
+
+        $("#divIsolatorGrid").on("click", ".table a", function () {
+            var id = $(this).closest(".box").data("id");
+            var $iconAction = $(this).find(".fa");
+
+            if ($iconAction.hasClass("fa-edit")) {
+                showPopup(id);
+            } else if ($iconAction.hasClass("fa-trash")) {
+                performDeletion(id);
+            } else if ($iconAction.hasClass("fa-calendar-times-o")) {
+                var callback = function (response) {
+                    Framework.Popup.CreateInfoPopup("Isolator Offline Details", response, null, null, null, true, initializeFormEvents);
+                };
+
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetIsolatorOfflineDetail")", { Id: id }, callback);
+            } else if ($iconAction.hasClass("fa-list")) {
+                var callbackProc = function (response) {
+                    Framework.Popup.CreateInfoPopup("Isolator Procedures", response, null, null, null, true);
+                };
+
+                Framework.Utility.ExecuteAjaxRequest("@Url.Action("GetIsolatorProcedures")", { Id: id }, callbackProc);
+            }
+
+            return $(this).attr("href") !== "#";
+        });
+
+        $("#linkSearch").click(function () {
+            var callback = function (response) {
+                $("#divIsolatorGrid").html(response);
+            };
+
+            var searchText = $("#SearchText").val();
+
+            Framework.Utility.ExecuteAjaxRequest("@Url.Action("Search")", { Page: 1, SearchText: searchText }, callback, null, 200);
+            return false;
+        });
+
+        setTimeout(function() {
+            $("#linkSearch").trigger("click");
+        }, 200);
+    })(jQuery)
+</script>

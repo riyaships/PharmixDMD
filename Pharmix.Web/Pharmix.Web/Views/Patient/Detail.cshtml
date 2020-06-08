@@ -1,0 +1,340 @@
+﻿@model Pharmix.Web.Models.PatientViewModel.PregnancyViewModel
+
+@{
+
+}
+
+@if (Model.IsAdmin)
+{
+    <form id="formUser" asp-action="Detail" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="PatientId" />
+        <input type="hidden" asp-for="Id" />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group text-center">
+                    <button type="submit" id="btnSaveUser" class="btn btn-sm btn-success">Save All Changes</button>
+                    <button type="reset" id="btnCancelUser" class="btn btn-sm btn-danger">Cancel</button>
+                </div>
+                <hr />
+            </div>
+            <div class="col-sm-6 form-horizontal">
+                <input type="hidden" asp-for="PatientId" />
+                <div class="form-group">
+                    <label asp-for="FirstName" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="FirstName" class="form-control" readonly />
+                    </div>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="Surname" class="form-control" readonly />
+                    </div>
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateOfBirth" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="DateOfBirth" class="form-control" />
+                    </div>
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6 form-horizontal">
+                <div class="form-group">
+                    <label asp-for="NHSNumber" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="NHSNumber" class="form-control" />
+                    </div>
+                    <span asp-validation-for="NHSNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaternityUnit" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="MaternityUnit" class="form-control" />
+                    </div>
+                    <span asp-validation-for="MaternityUnit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EDD" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="EDD" class="form-control" />
+                    </div>
+                    <span asp-validation-for="EDD" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab">Communication Need</a></li>
+                        @*<li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
+                            <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>*@
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="row">
+                                <input type="hidden" asp-for="CommunicationNeedViewModel.Id" />
+                                <input type="hidden" asp-for="CommunicationNeedViewModel.PregnancyId" />
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.AssistanceRequired" class="col-sm-5 control-label"></label>
+                                        <div class="col-sm-7">
+                                            <input asp-for="CommunicationNeedViewModel.AssistanceRequired" type="radio" value="true" /> Yes
+                                            <input asp-for="CommunicationNeedViewModel.AssistanceRequired" type="radio" value="false" /> No
+                                        </div>
+                                        <span asp-validation-for="CommunicationNeedViewModel.AssistanceRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.AssistanceRequiredDetail" class="control-label"></label>
+                                        <input asp-for="CommunicationNeedViewModel.AssistanceRequiredDetail" type="text" />
+                                        <span asp-validation-for="CommunicationNeedViewModel.AssistanceRequiredDetail" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.PreferredAssistance" class="control-label"></label>
+                                        <input asp-for="CommunicationNeedViewModel.PreferredAssistance" type="text" />
+                                        <span asp-validation-for="CommunicationNeedViewModel.PreferredAssistance" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="hidden" asp-for="CommunicationNeedViewModel.Id" />
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.SpeakEnglish" class="col-sm-5 control-label"></label>
+                                        <div class="col-sm-7">
+                                            <input asp-for="CommunicationNeedViewModel.SpeakEnglish" type="radio" value="true" /> Yes
+                                            <input asp-for="CommunicationNeedViewModel.SpeakEnglish" type="radio" value="false" /> No
+                                        </div>
+                                        <span asp-validation-for="CommunicationNeedViewModel.SpeakEnglish" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.FirstLanguage" class="control-label"></label>
+                                        <input asp-for="CommunicationNeedViewModel.FirstLanguage" type="text" />
+                                        <span asp-validation-for="CommunicationNeedViewModel.FirstLanguage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.PreferedLanguage" class="control-label"></label>
+                                        <input asp-for="CommunicationNeedViewModel.PreferedLanguage" type="text" />
+                                        <span asp-validation-for="CommunicationNeedViewModel.PreferedLanguage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="CommunicationNeedViewModel.InterpreterPhone" class="control-label"></label>
+                                        <input asp-for="CommunicationNeedViewModel.InterpreterPhone" type="text" />
+                                        <span asp-validation-for="CommunicationNeedViewModel.InterpreterPhone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        @*<div class="tab-pane" id="tab_2">
+                                The European languages are members of the same family. Their separate existence is a myth.
+                                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                                in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                                new common language would be desirable: one could refuse to pay expensive translators. To
+                                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                                words. If several languages coalesce, the grammar of the resulting language is more simple
+                                and regular than that of the individual languages.
+                            </div>*@
+                        <!-- /.tab-pane -->
+                        @*<div class="tab-pane" id="tab_3">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It has survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                                like Aldus PageMaker including versions of Lorem Ipsum.
+                            </div>*@
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+    </form>
+}
+else
+{
+
+    <div class="row">
+        <div class="col-sm-6 form-horizontal">
+            <input type="hidden" asp-for="PatientId" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    @Model.FirstName
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    @Model.Surname
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    @{ var strDOB = ((DateTime)Model.DateOfBirth).ToString("dd/MM/yyyy");}
+                    @strDOB
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <label asp-for="NHSNumber" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    @Model.NHSNumber
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaternityUnit" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    @Model.MaternityUnit
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="EDD" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    @{ var strEDD = ((DateTime)Model.EDD).ToString("dd/MM/yyyy");}
+                    @strEDD
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Communication Need</a></li>
+                    @*<li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
+                        <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>*@
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.AssistanceRequired" class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-7">
+                                        @{var AssistanceRequired = Model.CommunicationNeedViewModel.AssistanceRequired ? "Yes" : "No";}
+                                        @AssistanceRequired
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.AssistanceRequiredDetail" class="col-sm-7 control-label"></label>
+                                    <div class="col-sm-5">
+                                        @Model.CommunicationNeedViewModel.AssistanceRequiredDetail
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.PreferredAssistance" class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-7">
+                                        @Model.CommunicationNeedViewModel.PreferredAssistance
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.SpeakEnglish" class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-7">
+                                        @{var SpeakEnglish = Model.CommunicationNeedViewModel.SpeakEnglish ? "Yes" : "No";}
+                                        @SpeakEnglish
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.FirstLanguage" class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-7">
+                                        @Model.CommunicationNeedViewModel.FirstLanguage
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.PreferedLanguage" class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-7">
+                                        @Model.CommunicationNeedViewModel.PreferedLanguage
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label asp-for="CommunicationNeedViewModel.InterpreterPhone" class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-7">
+                                        @Model.CommunicationNeedViewModel.InterpreterPhone
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    @*<div class="tab-pane" id="tab_2">
+                            The European languages are members of the same family. Their separate existence is a myth.
+                            For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                            in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                            new common language would be desirable: one could refuse to pay expensive translators. To
+                            achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                            words. If several languages coalesce, the grammar of the resulting language is more simple
+                            and regular than that of the individual languages.
+                        </div>*@
+                    <!-- /.tab-pane -->
+                    @*<div class="tab-pane" id="tab_3">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also the leap into electronic typesetting,
+                            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                            sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                            like Aldus PageMaker including versions of Lorem Ipsum.
+                        </div>*@
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,85 @@
+﻿@model Pharmix.Web.Models.IsolatorVIewModels.IsolatorStaffAllocationIndexViewModel
+@{
+    ViewBag.Title = "Isolator Staff Management";
+}
+
+@{
+    <section>
+        <div class="container appointments">
+            <h2>
+                <span class="chosen-title-container">@Html.DropDownListFor(m => m.IsolatorId, Model.IsolatorList)</span> - Staff Allocation
+            </h2>
+            @Html.HiddenFor(m => m.IsolatorId)
+            <div class="scheduler-header">
+                <a title="Move to previous month" class="btn btn-default pull-left" id="linkPrevMonth" href="javascript:void(0)">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+                <span id="spnAppointmentTitle" class="h4" data-date="@DateTime.Now.ToString("yyyy-MM-01")">@DateTime.Now.ToString("MMMM, yyyy")</span>
+                <a title="Move to next month" class="btn btn-default pull-right" id="linkNextMonth" href="javascript:void(0)">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+                <a class="btn btn-default pull-right today" id="linkToday" href="javascript:void(0)">
+                    Today
+                </a>
+                <div class="reset-div>"></div>
+            </div>
+            <div id="isoScheduler"></div>
+
+            <div class="clearfix"></div>
+            <br/>
+            <div class="legends pull-right">
+                <span class="fa fa-2x fa-user text-success"></span> Staff Allocated &nbsp;&nbsp;
+                <span class="fa fa-2x fa-user text-warning"></span> Staff Yet to be Allocated &nbsp;&nbsp;
+                <span class="fa fa-2x fa-user"></span> Shift Unavailable
+            </div>
+            <a asp-action="Index" class="btn btn-danger pull-left">Back</a>
+        </div>
+    </section>
+}
+@section Styles{
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/scheduler/css/escScheduler.css")" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+}
+
+<script type="text/javascript" src="@Url.Content("~/scheduler/js/escScheduler.js")"></script>
+<script>
+    $(document).ready(function () {
+        Framework.Utility.WheelerJsUrl = '@(Url.Content("~/scheduler/js/jquery.mousewheel.min.js"))';
+
+        Framework.Utility.InitializeEscScheduler("isoScheduler", $("#IsolatorId").val(), "@DateTime.Now.ToString("yyyy-MM-01")",
+            "@DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)", '@Url.Content("~/scheduler/scheduler.json")', "/isolator/getisolatorstaffallocations", "/isolator/viewisolatorstaffallocation");
+
+        $("#linkPrevMonth,#linkNextMonth,#linkToday").click(function () {
+            var objDate = new Date($("#spnAppointmentTitle").data("date"));
+
+            var linkId = $(this).attr("id");
+            var i = 0;
+            switch (linkId) {
+                case "linkPrevMonth":
+                    i = -1;
+                    break;
+                case "linkNextMonth":
+                    i = 1;
+                    break;
+                case "linkToday":
+                    objDate = new Date();
+                    break;
+            }
+            objDate.setDate(01);
+            objDate.setMonth(objDate.getMonth() + i);
+
+            var formatedDate = objDate.getFullYear() + "-" + Framework.Utility.FormatToTwoDigitValue(objDate.getMonth() + 1) + "-" + Framework.Utility.FormatToTwoDigitValue(objDate.getDate());
+            var daysInMonth = new Date(objDate.getFullYear(), objDate.getMonth() + 1, 0).getDate();
+
+            var monthText = objDate.toLocaleString("en-us", { month: "long" });
+            $("#spnAppointmentTitle").data("date", formatedDate).text(monthText + ", " + objDate.getFullYear());
+
+            Framework.Utility.InitializeEscScheduler("isoScheduler", $("#IsolatorId").val(), formatedDate, daysInMonth, '@Url.Content("~/scheduler/scheduler.json")', "/isolator/getisolatorstaffallocations", "/isolator/viewisolatorstaffallocation");
+        });
+
+
+        $("#IsolatorId").chosen().on("change", function() {
+            window.location.href = "/isolator/isolatorstaffallocationindex?isoid=" + $(this).val() + "";
+        });
+    });
+</script>

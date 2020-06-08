@@ -1,0 +1,131 @@
+﻿
+@model Pharmix.Web.Models.ContactViewModel
+
+<div id="contact" class="section-full bg-white content-inner bg-img-fix overlay-black-dark wow fadeInUp" style="background-image:url(/NewContent/images/background/11.jpg);">
+    <div class="container">
+        <div class="section-head text-center text-white">
+            <h3 class="h3 text-uppercase">Get <span class="text-primary">In Touch</span></h3>
+            <div class="dez-separator bg-primary"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="section-content text-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="p-a30 m-b30 border contact-area border-1 text-white">
+                        <h2 class="m-b10 m-t15">Quick Contact</h2>
+                        <ul class="no-margin text-left">
+                            <li class="icon-bx-wraper left m-b30">
+                                <div class="icon-bx-xs border-1"> <a href="#" class="icon-cell"><i class="fa fa-map-marker"></i></a> </div>
+                                <div class="icon-content">
+                                    <h6 class="text-uppercase m-tb0 dez-tilte">Address:</h6>
+                                    <p>71-75 Shelton Street Covent Garden London, United Kingdom, WC2H 9JQ</p>
+                                </div>
+                            </li>
+                            <li class="icon-bx-wraper left  m-b30">
+                                <div class="icon-bx-xs border-1"> <a href="#" class="icon-cell"><i class="fa fa-envelope"></i></a> </div>
+                                <div class="icon-content">
+                                    <h6 class="text-uppercase m-tb0 dez-tilte">Sales:</h6>
+                                    <p><a href="mailto:sales@pharmix.co.uk" class="text-white">sales@pharmix.co.uk</a></p>
+                                </div>
+                            </li>
+                            <li class="icon-bx-wraper left  m-b30">
+                                <div class="icon-bx-xs border-1"> <a href="#" class="icon-cell"><i class="fa fa-envelope"></i></a> </div>
+                                <div class="icon-content">
+                                    <h6 class="text-uppercase m-tb0 dez-tilte">Technical:</h6>
+                                    <p><a href="mailto:support@pharmix.co.uk" class="text-white">support@pharmix.co.uk</a></p>
+                                </div>
+                            </li>
+                            <li class="icon-bx-wraper left">
+                                <div class="icon-bx-xs border-1"> <a href="#" class="icon-cell"><i class="fa fa-phone"></i></a> </div>
+                                <div class="icon-content">
+                                    <h6 class="text-uppercase m-tb0 dez-tilte">PHONE</h6>
+                                    <p><a href="tel:+442081443354" class="text-white">+44 20 8144 3354</a></p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="m-t20">
+                            <ul class="dez-social-icon border dez-social-icon-lg">
+                                <li><a href="javascript:void(0);" class="fa fa-facebook bg-primary"></a></li>
+                                <li><a href="javascript:void(0);" class="fa fa-twitter bg-primary"></a></li>
+                                <li><a href="javascript:void(0);" class="fa fa-linkedin bg-primary"></a></li>
+                                <li><a href="javascript:void(0);" class="fa fa-pinterest-p bg-primary"></a></li>
+                                <li><a href="javascript:void(0);" class="fa fa-google-plus bg-primary"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="p-a30 bg-gray clearfix m-b30 ">
+                        <h2 class="m-t15">Send Message Us</h2>
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="dzFormMsg">@ViewBag.Message</div>
+                        }
+                        @if (ViewBag.Message == null)
+                        {
+                            <form method="post" class="dzForm" id="px-contactform">
+                                <input type="hidden" value="Contact" name="dzToDo">
+                                <div class="row text-left">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input asp-for="Name" name="Name" class="form-control" placeholder="Your Name" type="text" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input asp-for="Email" name="Email" class="form-control" required="" placeholder="Your Email" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input asp-for="Phone" name="Phone" class="form-control" placeholder="Phone" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input asp-for="Subject" name="Subject" class="form-control" placeholder="Subject" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea rows="5" cols="15" asp-for="Message" name="Message" class="form-control" required="" placeholder="Your Message..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <input asp-for="SendCopy" name="SendCopy" type="checkbox" checked="checked" style="display:none;" />
+                                            <label asp-for="SendCopy">Send me a copy of this email</label>
+                                        </div>
+                                    </div>
+                                      <div class="col-md-12 text-center">
+    <div class="g-recaptcha" data-sitekey="6Lf3nosUAAAAAKPayjRPdXwNWhNzftxLHuPncUPx"></div>
+</div>
+                                        <div class="col-md-12 text-center">
+                                            <button name="submit" type="submit" value="Submit" class="site-button"> <span>Submit</span> </button>
+                                        </div>
+                                    </div>
+
+</form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewContent/jquery.unobtrusive-ajax.min.js"></script>
+<script type="text/javascript">
+    $("#px-contactform").on("submit", function() {
+        var captchaFilled = grecaptcha.getResponse();
+        if (captchaFilled == null || captchaFilled.length < 1) return false;
+        return true;
+    });
+    function HideForm() { $("#form-area").hide(); $('#message-area').html(""); }
+    function ShowFailure() { $("#form-area").show(); $('#message-area').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>"); }
+</script>

@@ -1,0 +1,29 @@
+﻿@model Newtonsoft.Json.Linq.JObject
+@using Newtonsoft.Json.Linq
+@{
+    Layout = null;
+    string version = ViewBag.Version!=null? ViewBag.Version:string.Empty;
+}
+
+@if (Model != null)
+{
+    <div class="panel panel-default versionChangeDetail">
+        <div class="panel-heading">Version - @version</div>
+        @foreach (JToken token in Model.Children())
+        {
+            if (token is JProperty)
+            {
+                var prop = token as JProperty;
+                var name = prop.Name;
+                var value = prop.Value;
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="col-md-4" style="word-wrap:break-word;">@name</p>
+                        <p class="col-md-8 lblValue" style="word-wrap:break-word;">@value</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+

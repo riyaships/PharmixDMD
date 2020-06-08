@@ -1,0 +1,49 @@
+﻿@model Pharmix.Data.Entities.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Customer Register";
+}
+
+<hr class="">
+<div class="col-sm-12">
+    @using (Html.BeginForm("ManageUserRole", "User", FormMethod.Post, new { @class = "form-horizontal frmManageRole" }))
+    {
+        <input type="hidden" asp-for="Name" value="@Model.Name" />
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label col-sm-2 ">Username</label>
+            <div class="col-sm-3">
+                <input asp-for="Name" class="form-control" disabled>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Roles</label>
+            <div class="col-sm-4">
+                @if (Model.UserRoleViewModelList != null && Model.UserRoleViewModelList.Count > 0)
+                {
+                    for (int i = 0; i < Model.UserRoleViewModelList.Count; i++)
+                    {
+                        @Html.HiddenFor(m => m.UserRoleViewModelList[i].RoleId)
+                        @Html.HiddenFor(m => m.UserRoleViewModelList[i].RoleName)
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.UserRoleViewModelList[i].IsSelected)
+                                @Model.UserRoleViewModelList[i].RoleName
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2  "></label>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-default" id="btnSave">Save</button>
+            </div>
+        </div>
+
+        <br /><br />
+
+    }
+</div>

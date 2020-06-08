@@ -1,0 +1,168 @@
+﻿@model Pharmix.Web.Models.AuditInfoViewModel
+
+@{
+    Layout = null;
+}
+
+<style>
+    .box-body {
+        color: black !important;
+    }
+
+    .topSpace {
+        margin-top: 20px;
+    }
+
+    .diff {
+        color: red;
+    }
+</style>
+
+
+@*<section class="content-header">
+        <h1>
+            Version Compare
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Version Compare</a></li>
+        </ol>
+    </section>*@
+
+
+<section class="content" id="divVersionCompare">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="col-sm-5">
+                                    <label>Select Version</label>
+                                    <select class="form-control" asp-for="Version" asp-items="@(SelectList)(ViewBag.Versions)" id="ddlVersion1">
+                                        <option selected="selected" value="">- Select Version -</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-8">
+                                    <label>Select Version</label>
+                                    <select class="form-control" asp-items="@(SelectList)(ViewBag.Versions)" id="ddlVersion2">
+                                        <option selected="selected" value="">- Select Version -</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button class="btn btn-success disabled topSpace" id="btnCompareVersion">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="max-height:400px; overflow-y :scroll;">
+                        <div class="col-md-12 topSpace" id="versionsDetailContainer">
+                            <div class="col-md-6" id="version1Container"></div>
+                            <div class="col-md-6" id="version2Container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+    var versionHtml = $('#ddlVersion1').html();
+    $(function () {
+
+        $('#btnCompareVersion').on('click', function () {
+            ddlVersion1Changed();
+            ddlVersion2Changed();
+        });
+
+        $('#ddlVersion1').on('change', function () {
+            ddlVersion1Changed();
+        });
+        $('#ddlVersion2').on('change', function () {
+            ddlVersion2Changed();
+        });
+
+        function ddlVersion1Changed() {
+
+            var selectedOption = $('#ddlVersion1').val();
+            if (selectedOption) {
+                if ($('#ddlVersion2').val())
+                $('#btnCompareVersion').removeClass('disabled');
+
+                //var version2SelectedOption = $('#ddlVersion2').val();
+                //$('#ddlVersion2').html(versionHtml);
+                //if (selectedOption)       //Remove the selected version in another ddl
+                //    $('#ddlVersion2 option[value=' + selectedOption + ']').remove();
+                //$('#ddlVersion2').val(version2SelectedOption);
+
+                GetUpdateVersionHtml(selectedOption, $('#version1Container'));
+            }
+            else
+                $('#btnCompareVersion').addClass('disabled');
+
+        }
+
+        function ddlVersion2Changed() {
+            var selectedOption = $('#ddlVersion2').val();
+
+            if (selectedOption) {
+                if ($('#ddlVersion1').val())
+                    $('#btnCompareVersion').removeClass('disabled');
+                //var version1SelectedOption = $('#ddlVersion1').val();
+                //$('#ddlVersion1').html(versionHtml);
+                //if (selectedOption)            //Remove the selected version in another ddl
+                //    $('#ddlVersion1 option[value=' + selectedOption + ']').remove();
+                //$('#ddlVersion1').val(version1SelectedOption);
+
+                GetUpdateVersionHtml(selectedOption, $('#version2Container'));
+            }
+            else
+                $('#btnCompareVersion').addClass('disabled');
+        }
+
+        function GetUpdateVersionHtml(id, updContainer) {
+            if (id) {
+                var callback = function (response) {
+                    $(updContainer).html(response);
+                    CompareVersions();
+                }
+                Framework.Utility.ExecuteAjaxRequest("/AuditInfo/GetVersionHtml", { id: id }, callback);
+            }
+            else
+                $(updContainer).html('');
+        }
+
+        function CompareVersions() {
+            var $versionContainer1 = $('#version1Container');
+            var $versionContainer2 = $('#version2Container');
+            if ($versionContainer1.html() && $versionContainer2.html()) {
+                $versionContainer1.find('.versionChangeDetail .lblValue').each(function (idx, dtl) {
+                    var version1Val = $(this).text();   //$(this).text();
+                    var version2Lbl = $versionContainer2.find('.versionChangeDetail .lblValue:eq(' + idx + ')');
+                    var version2Val = $(version2Lbl).text();
+
+                    //console.log(' version1Val  =  ' + version1Val + ' version2Val  =  ' + version2Val);
+
+                    if (version1Val != version2Val) {
+                        $(this).addClass('diff');
+                        $(version2Lbl).addClass('diff');
+                    }
+                    else {
+                        $(this).removeClass('diff');
+                        $(version2Lbl).removeClass('diff');
+                    }
+
+                });
+            }
+        }
+    });
+
+</script>
